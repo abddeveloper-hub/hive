@@ -27,20 +27,19 @@ export default function Header() {
       {/* Main Bar */}
       <div className="h-20 px-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <img
-            alt="HIVE Wordmark Logo"
-            className="h-8 w-auto object-contain cursor-pointer"
+          <button
+            aria-label="HIVE home"
+            className="flex flex-col items-start leading-none"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            src="https://lh3.googleusercontent.com/aida/ALJJyrBQSzjXhI7NR3N656ISiunns3dP_UWzU7Dfjn0_r3EwkDk7oqZbCxqvBrBAgX6J-LIWh0bPagaTPZHEvNR0J71WDJNAJP8qq-xT8oEjyfjnlBh67IzxnGLGAHlRZBPzb4DlO2sNCuhrc0s3NOWIFJwLskckiDBH3GHAz8OyIe6nBnQRK8FTj99Rd5dG3j6a5-Hjd8L99hTaO2yDyL-23n85RkcElao5Ys8ngNa6w4E"
-          />
-          <div className="flex flex-col">
-            <span className="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface">
+            type="button"
+          >
+            <span className="font-headline-sm text-[22px] font-bold uppercase tracking-[0.14em] text-on-surface">
               HIVE
             </span>
-            <span className="font-label-mono-sm text-label-mono-sm text-outline uppercase tracking-wider -mt-1">
-              Home
+            <span className="mt-1 font-label-mono-sm text-[9px] uppercase tracking-[0.2em] text-outline">
+              Streetwear
             </span>
-          </div>
+          </button>
         </div>
 
         <div className="flex items-center gap-1">

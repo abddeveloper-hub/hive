@@ -51,7 +51,7 @@ export default function RootLayout({
       <body className="bg-surface font-body-md text-on-surface flex flex-col min-h-screen selection:bg-primary selection:text-pitch-black">
         <CartProvider>
           <Header />
-          <main className="flex flex-col relative w-full pt-20 pb-24 bg-surface min-h-screen">
+          <main className="flex flex-col relative w-full pt-[calc(102px+env(safe-area-inset-top,0px))] pb-24 bg-surface min-h-screen">
             {children}
           </main>
           {/* Global Interactive Drawers & Modals */}
