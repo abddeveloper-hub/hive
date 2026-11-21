@@ -57,55 +57,32 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Cart state
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('hive_cart');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {
-          console.error(e);
-        }
-      }
+  const [cart, setCart] = useState<CartItem[]>([
+    {
+      id: 'initial-1',
+      productId: 'denim-1',
+      name: 'Vintage Bootcut (Deep Blue)',
+      price: 1199,
+      originalPrice: 1499,
+      size: '32',
+      quantity: 1,
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDmKvjEc1A6hZL5zh90Hd27k9Wk5t1mozeTHXDKQJg4RTARxcfdtp-rApFCnCCs5Eq4_mvTLQWVJ6mURufYpOVsNgRVeJitLEoYoW8erqJQwWzd4Y-R-wW1vxPcj2hps_-Ein8kpkEKL6E8MWUOs0FsqLYLoxotsxEKUCoX407pf2P8MXW--7vq1ytuTSABrFZ034G4b8jZBStiy2wAewoNKPA0uo48Mqpd6XZfwlE',
+    },
+    {
+      id: 'initial-2',
+      productId: 'topwear-3',
+      name: 'Washed Olive Tee',
+      price: 899,
+      originalPrice: 1099,
+      size: 'L',
+      quantity: 1,
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAx_nh7u5NMuYWbwzorPCX5UGSNLtDgXAfIzrRXFU62wcfso4YYoaqbS8Sdo0MhF_byp9QJMGawmcn-ysbZK4Txa8IKxaOCbHo-Al9e5KBgnB1wWn12ByfdrKYRAfbsfqin7dg0jMnB4EIyxAXEYwpcGdUn_fi6gETcT0a3TDIAFI7keCvPhtRp6jFtg-WqjTegG2GGU2p8wHZltceG5HpNUgdoN9bEa8OwrwCTmAo',
     }
-    return [
-      {
-        id: 'initial-1',
-        productId: 'denim-1',
-        name: 'Vintage Bootcut (Deep Blue)',
-        price: 1199,
-        originalPrice: 1499,
-        size: '32',
-        quantity: 1,
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDmKvjEc1A6hZL5zh90Hd27k9Wk5t1mozeTHXDKQJg4RTARxcfdtp-rApFCnCCs5Eq4_mvTLQWVJ6mURufYpOVsNgRVeJitLEoYoW8erqJQwWzd4Y-R-wW1vxPcj2hps_-Ein8kpkEKL6E8MWUOs0FsqLYLoxotsxEKUCoX407pf2P8MXW--7vq1ytuTSABrFZ034G4b8jZBStiy2wAewoNKPA0uo48Mqpd6XZfwlE',
-      },
-      {
-        id: 'initial-2',
-        productId: 'topwear-3',
-        name: 'Washed Olive Tee',
-        price: 899,
-        originalPrice: 1099,
-        size: 'L',
-        quantity: 1,
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAx_nh7u5NMuYWbwzorPCX5UGSNLtDgXAfIzrRXFU62wcfso4YYoaqbS8Sdo0MhF_byp9QJMGawmcn-ysbZK4Txa8IKxaOCbHo-Al9e5KBgnB1wWn12ByfdrKYRAfbsfqin7dg0jMnB4EIyxAXEYwpcGdUn_fi6gETcT0a3TDIAFI7keCvPhtRp6jFtg-WqjTegG2GGU2p8wHZltceG5HpNUgdoN9bEa8OwrwCTmAo',
-      }
-    ];
-  });
+  ]);
 
   // Wishlist state
-  const [wishlist, setWishlist] = useState<Product[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('hive_wishlist');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    }
-    return [];
-  });
+  const [wishlist, setWishlist] = useState<Product[]>([]);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   // Modals & UI States
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -128,21 +105,42 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Micro-toast state
   const [lastToast, setLastToast] = useState<string | null>(null);
 
+  // Hydrate from localStorage once on client mount
   useEffect(() => {
+    try {
+      const savedCart = localStorage.getItem('hive_cart');
+      if (savedCart) {
+        setCart(JSON.parse(savedCart));
+      }
+      const savedWishlist = localStorage.getItem('hive_wishlist');
+      if (savedWishlist) {
+        setWishlist(JSON.parse(savedWishlist));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    setIsHydrated(true);
+  }, []);
+
+  // Save to localStorage whenever cart changes (only after hydration)
+  useEffect(() => {
+    if (!isHydrated) return;
     try {
       localStorage.setItem('hive_cart', JSON.stringify(cart));
     } catch (e) {
       console.error(e);
     }
-  }, [cart]);
+  }, [cart, isHydrated]);
 
+  // Save to localStorage whenever wishlist changes (only after hydration)
   useEffect(() => {
+    if (!isHydrated) return;
     try {
       localStorage.setItem('hive_wishlist', JSON.stringify(wishlist));
     } catch (e) {
       console.error(e);
     }
-  }, [wishlist]);
+  }, [wishlist, isHydrated]);
 
   const showToast = (msg: string) => {
     setLastToast(msg);
