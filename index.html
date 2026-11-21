@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#131313;color:#e5e2e1;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-dim": "#131313", "on-tertiary-fixed-variant": "#294a60", "tertiary-fixed-dim": "#aacbe5", "surface-container-low": "#1c1b1b", "tertiary-container": "#c8e6ff", "on-primary": "#2f3131", "outline-variant": "#444748", "rust-leather": "#6d3929", "on-surface": "#e5e2e1", "outline": "#8e9192", "tertiary-fixed": "#c8e6ff", "surface": "#131313", "tertiary": "#ffffff", "error-container": "#93000a", "on-error": "#690005", "inverse-surface": "#e5e2e1", "secondary-container": "#6c3828", "primary": "#ffffff", "on-error-container": "#ffdad6", "pitch-black": "#000000", "on-tertiary-fixed": "#001e2e", "on-primary-container": "#636565", "surface-bright": "#3a3939", "secondary-fixed": "#ffdbd0", "on-primary-fixed": "#1a1c1c", "on-secondary-fixed-variant": "#6c3828", "inverse-primary": "#5d5f5f", "pure-white": "#ffffff", "line-subtle": "#222222", "secondary-fixed-dim": "#ffb59f", "surface-subtle": "#111111", "primary-fixed": "#e2e2e2", "surface-container-high": "#2a2a2a", "surface-variant": "#353534", "error": "#ffb4ab", "on-secondary-container": "#eca48e", "surface-container-lowest": "#0e0e0e", "surface-container-highest": "#353534", "surface-container": "#201f1f", "on-tertiary": "#0f3448", "surface-tint": "#c6c6c7", "primary-fixed-dim": "#c6c6c7", "on-surface-variant": "#c4c7c8", "on-background": "#e5e2e1", "on-tertiary-container": "#48687f", "primary-container": "#e2e2e2", "surface-dark": "#0a0a0a", "on-primary-fixed-variant": "#454747", "secondary": "#ffb59f", "line-light": "#e5e5e5", "background": "#131313", "slate-denim": "#4b6b82", "on-secondary-fixed": "#360f04", "inverse-on-surface": "#313030", "off-white": "#f7f7f7", "on-secondary": "#512314" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "margin-tablet": "2rem", "space-xl": "2.5rem", "space-xxl": "4rem", "margin": "1rem", "space-md": "1rem", "space-xs": "0.25rem", "gutter": "1rem", "margin-desktop": "3rem", "gutter-desktop": "1.5rem", "space-lg": "1.5rem" }, fontFamily: { "label-mono-lg": ["JetBrains Mono"], "headline-lg": ["Space Grotesk"], "headline-sm": ["Space Grotesk"], "body-lg": ["Hanken Grotesk"], "label-mono-sm": ["JetBrains Mono"], "body-md": ["Hanken Grotesk"], "body-sm": ["Hanken Grotesk"], "display-hero-mobile": ["Space Grotesk"], "display-hero": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "badge-caps": ["Space Grotesk"], "headline-lg-mobile": ["Space Grotesk"] }, fontSize: { "label-mono-lg": ["13px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "500" }], "headline-lg": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "500" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.1em", "fontWeight": "500" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-hero-mobile": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "display-hero": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.04em", "fontWeight": "700" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "badge-caps": ["11px", { "lineHeight": "12px", "letterSpacing": "0.14em", "fontWeight": "700" }], "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen selection:bg-primary selection:text-pitch-black"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.25)]"><div class="w-full bg-rust-leather text-pure-white py-1 px-4 text-center"><p class="font-label-mono-sm text-label-mono-sm uppercase tracking-widest truncate">Free shipping on orders above ₹1,999 • Diwali Drop Live</p></div><div class="h-20 px-4 flex items-center justify-between gap-3"><div class="flex items-center gap-3"><img alt="HIVE Wordmark Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrBQSzjXhI7NR3N656ISiunns3dP_UWzU7Dfjn0_r3EwkDk7oqZbCxqvBrBAgX6J-LIWh0bPagaTPZHEvNR0J71WDJNAJP8qq-xT8oEjyfjnlBh67IzxnGLGAHlRZBPzb4DlO2sNCuhrc0s3NOWIFJwLskckiDBH3GHAz8OyIe6nBnQRK8FTj99Rd5dG3j6a5-Hjd8L99hTaO2yDyL-23n85RkcElao5Ys8ngNa6w4E"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface">HIVE</span><span class="font-label-mono-sm text-label-mono-sm text-outline uppercase tracking-wider -mt-1">Home</span></div></div><div class="flex items-center gap-1"><button aria-label="Search Catalog" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">search</span></button><button aria-label="Wishlist" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">favorite</span></button><button aria-label="Shopping Cart" class="relative w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">shopping_bag</span><span class="absolute top-2 right-2 min-w-[16px] h-4 px-1 bg-primary text-pitch-black font-label-mono-sm text-[10px] leading-4 font-bold flex items-center justify-center">02</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-20 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full pb-8">
+<!-- 1. CAMPAIGN HERO BANNER -->
+<section class="relative w-full overflow-hidden bg-surface-container-lowest">
+<div class="relative w-full aspect-[4/5] max-h-[520px]">
+<img class="w-full h-full object-cover object-top opacity-85" data-alt="Editorial streetwear campaign lookbook shot of a confident young man in oversized vintage denim trousers and a structured boxy minimalist dark jacket against an industrial raw concrete Mumbai wall. High fashion brutalist aesthetic, moody twilight cinematic lighting, deep denim indigo and obsidian tones, film grain texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDirQroA1268KwtEQHni702QqK0BewgBfOGk6KcD_nwkoMVYjqQ8LY4SyN50aivlx7zmRQfLpgFgijky8ScdVE1Gi9Gmjfy3K1RGiZa06PWmHWbQNl7RVg9Pu4Ka6iR4ubUPsFRhVzwrYafFCp6wgGK4Dv-2Va0cHggMnDQt1DBT_R9M504n0AD6E5Zm6QuWXxjJ7smCHOC3zjqq28au7PMPQbpok29Xff4I1YfIXc"/>
+<!-- Dramatic Atmospheric Vignette & Scrim -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark via-surface-dark/40 to-transparent"></div>
+<!-- Campaign Copy & Callout -->
+<div class="absolute inset-x-0 bottom-0 p-5 flex flex-col justify-end space-y-3">
+<div class="flex items-center gap-2">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-2 py-0.5 tracking-widest">
+            DROP 09 LIVE
+          </span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-on-surface-variant tracking-wider">
+            FW // 2025
+          </span>
+</div>
+<div class="space-y-1">
+<h1 class="font-display-hero-mobile text-display-hero-mobile text-pure-white uppercase tracking-tight font-bold leading-none">
+            CAMPUS CHAOS
+          </h1>
+<p class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">
+            Denims, Cargos &amp; Streetwear — HIVE
+          </p>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface/90 italic tracking-wide max-w-[280px]">
+          “Made for men who’ve outgrown doubt.”
+        </p>
+<div class="pt-1 flex gap-2">
+<a class="w-full bg-primary text-pitch-black font-headline-sm text-headline-sm uppercase py-3.5 px-6 text-center font-bold tracking-wider hover:bg-pure-white transition-all shadow-md active:scale-[0.98]" href="#denim-catalog">
+            EXPLORE NOW
+          </a>
+</div>
+</div>
+</div>
+</section>
+<!-- BRAND STATEMENT TICKER -->
+<div class="w-full bg-surface-container py-2.5 px-4 flex items-center justify-between overflow-x-hidden">
+<div class="flex items-center gap-6 whitespace-nowrap animate-pulse">
+<span class="font-label-mono-sm text-label-mono-sm text-outline uppercase tracking-widest">ARCHIVAL CUTS</span>
+<span class="w-1.5 h-1.5 bg-rust-leather rounded-full"></span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline uppercase tracking-widest">HEAVYWEIGHT SELVEDGE</span>
+<span class="w-1.5 h-1.5 bg-rust-leather rounded-full"></span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline uppercase tracking-widest">MADE FOR THE RELENTLESS</span>
+</div>
+</div>
+<!-- 2. SHOP BY FIT (DENIMS) -->
+<section class="w-full pt-8 px-4 flex flex-col space-y-4" id="denim-catalog">
+<div class="flex flex-col space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-outline tracking-widest">ARCHIVE SELECTOR</span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-secondary font-semibold">106 STYLES</span>
+</div>
+<div class="flex items-baseline justify-between">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase font-bold text-on-surface">
+          SHOP BY FIT — <span class="text-outline">DENIMS</span>
+</h2>
+</div>
+</div>
+<!-- Fit Pills Interactive Filter -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none" id="fit-pills">
+<button class="fit-btn px-4 py-2 bg-primary text-pitch-black font-headline-sm text-headline-sm uppercase tracking-wider font-semibold whitespace-nowrap transition-colors" onclick="filterFit(this, 'all')">
+        ALL FITS
+      </button>
+<button class="fit-btn px-4 py-2 bg-surface-container-high text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider whitespace-nowrap hover:bg-surface-bright transition-colors" onclick="filterFit(this, 'bootcut')">
+        BOOTCUT
+      </button>
+<button class="fit-btn px-4 py-2 bg-surface-container-high text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider whitespace-nowrap hover:bg-surface-bright transition-colors" onclick="filterFit(this, 'straight')">
+        STRAIGHT
+      </button>
+<button class="fit-btn px-4 py-2 bg-surface-container-high text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider whitespace-nowrap hover:bg-surface-bright transition-colors" onclick="filterFit(this, 'baggy')">
+        BAGGY
+      </button>
+<button class="fit-btn px-4 py-2 bg-surface-container-high text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider whitespace-nowrap hover:bg-surface-bright transition-colors" onclick="filterFit(this, 'barrel')">
+        BARREL
+      </button>
+</div>
+<!-- 2-Column Product Grid -->
+<div class="grid grid-cols-2 gap-3 pt-2" id="denim-grid">
+<!-- Denim 1 -->
+<div class="denim-card flex flex-col bg-surface-container-low group cursor-pointer" data-fit="bootcut">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Streetwear studio catalog photography of men's Vintage Bootcut Denim in deep blue wash, clean brutalist front view showing relaxed knee flare, worn on model with heavy work boots, studio high-contrast lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmKvjEc1A6hZL5zh90Hd27k9Wk5t1mozeTHXDKQJg4RTARxcfdtp-rApFCnCCs5Eq4_mvTLQWVJ6mURufYpOVsNgRVeJitLEoYoW8erqJQwWzd4Y-R-wW1vxPcj2hps_-Ein8kpkEKL6E8MWUOs0FsqLYLoxotsxEKUCoX407pf2P8MXW--7vq1ytuTSABrFZ034G4b8jZBStiy2wAewoNKPA0uo48Mqpd6XZfwlE"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">20% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">BOOTCUT</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Vintage Bootcut (Deep Blue)
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹1,199</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,499</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">5 Sizes (28-36)</span>
+<button aria-label="Quick add" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Denim 2 -->
+<div class="denim-card flex flex-col bg-surface-container-low group cursor-pointer" data-fit="bootcut">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Editorial look of men's raw Black Rinse Vintage Bootcut denim jeans, dark monochrome tonal look with clean industrial aesthetic, crisp creases, premium streetwear silhouette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWT4xtXTi5HNreGyUa8ukpBmWYTFjVl5ILSHP9qPDdh2weVsgRYdCcQV64q1lgssHEDujgskqFB-LUamFHUG6rCe8e8O01k84viHb2PITEBkl_irEIa9FMYZfIHTRhEfQn1uFPLy1KrC89DVLbzqudwCGilqQH8GTNuo4dE8S8RmJkG1jjDNRCiWEDP6XEl8gW2U2ZwbO7q8k1RLWS15xsIQvQZ0Bz0Kp8pKbJT9M"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">20% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">BOOTCUT</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Vintage Bootcut (Black Rinse)
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹1,199</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,499</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">5 Sizes (28-36)</span>
+<button aria-label="Quick add" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Denim 3 -->
+<div class="denim-card flex flex-col bg-surface-container-low group cursor-pointer" data-fit="bootcut">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="High angle streetwear photo of men's Coastal Blue flared bootcut jeans draped over heavy industrial metal staircase, natural daylight highlights faded whiskering." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-jNSgMRHICUCzP14SymAS1Jm2VLiWiHwiT33pSJnmmSN-ZyprXBFToUETiJ_vdUiAnmqmS42TqfQtB3l7Z5gRI9T-jMXgd6UtzOx9c58RNsA2to3KgMoPZKTMkzza96wFcLUJr_NcYtPBffAq08MsA-D5Qbd1p8gYHN_w1WflxUPvoWgbvWtCs5tqLs_bMrSljpOb0DWW9iS-RM6Z2OLMxDJ0uweR23qX0iIBEPk"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">20% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">BOOTCUT</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Vintage Bootcut (Coastal Blue)
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹1,199</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,499</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">5 Sizes (28-36)</span>
+<button aria-label="Quick add" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Denim 4 -->
+<div class="denim-card flex flex-col bg-surface-container-low group cursor-pointer" data-fit="straight">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Minimalist streetwear product shot of Straight Fit Jeans in Rustic Wash tone, heavy cotton texture, raw hem details, moody dark backdrop with directional studio rim light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOSqVU0ofkJ_rAX6RuNC5Fqz1hPuNYd2GWQ5yZOKCQNTI7zVTp6458uK0nYzpWkO8GEDko8zAkKBkZZNyJid78kCDPVAjjvReLIe9cN8S4C_sadau-YNkXjwLJcN_0xfHFm8XKrFdMV6perbz1jmvo_FWMklhT9XfMLjfuMMrh1oJ0PplCzP1_RnF1gDGhrLmGVn0jHElga9pXDG2jNHu3kuk6c11Hjij38TKkVR4"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">20% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">STRAIGHT</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Straight Fit (Rustic Wash)
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹1,199</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,499</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">5 Sizes (28-36)</span>
+<button aria-label="Quick add" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Denim 5 (Baggy) -->
+<div class="denim-card flex flex-col bg-surface-container-low group cursor-pointer" data-fit="baggy">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Streetwear model standing sideways showcasing oversized Baggy Fit Denim in Rustic Wash, wide leg opening pooling gracefully over chunky skate sneakers, brutalist raw background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv8QU2oYUEfixLDcj1zzcq0lPStZUN_likORjq2vCxz6qappOFVgUAdsKDgmXveNfWChWvCOEc_TVx4y67lpx9V2yJ9hdrptQmzXGGdJ043Dyzdu55M-seB63j3XPJllOLy1IFmzUop4GyUzdCINNYKmqCiFzTzZ6d3wfJJkQrw73tnVcr8ukAAdz3p6QWZ1Kh0NiwyZ65wjq6ueQK8_KPkZQ-seIZqV1mOjfRPV8"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">20% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">BAGGY</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Baggy Fit (Rustic Wash)
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹1,199</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,499</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">6 Sizes (28-38)</span>
+<button aria-label="Quick add" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Denim 6 (Baggy - Sold Out) -->
+<div class="denim-card flex flex-col bg-surface-container-low group opacity-85" data-fit="baggy">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover grayscale-[30%]" data-alt="Editorial product view of Sun-faded Blue Baggy Fit Denim jeans laid flat on raw black steel slab, muted pastel indigo tones, distressed vintage wash, soft natural shadow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR9qcuWx9ZYV_Wpbw7p3HdgdGVeKTx_gz4wfX9grJItBViTm67zEmjb_nJtCpnKreZ6tyu7sqPcsIjuvNjW3oXC0QCzf2k1tAM9y2qrGtDQJYehTemn8ddaeTUXQ2oha6sWEZf1BaTUmPiHM7M55qoIvHBe9-5VUwSboWz1p_8PaCJD9MjgxeIqdnCzvOzQhY8m6hpd4CW0f-jxrhUr9ui9e0lkZoqNwuBP6u6aWc"/>
+<div class="absolute inset-0 bg-pitch-black/40 flex items-center justify-center">
+<span class="bg-surface-dark/95 text-pure-white font-badge-caps text-badge-caps uppercase px-3 py-1 tracking-widest">
+              SOLD OUT
+            </span>
+</div>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">BAGGY</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface-variant line-clamp-1">
+            Baggy Fit (Sun-faded Blue)
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-on-surface-variant">₹1,199</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,499</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-error uppercase">Join Waitlist</span>
+<span class="material-symbols-outlined text-outline text-[18px]">notifications</span>
+</div>
+</div>
+</div>
+<!-- Denim 7 (Barrel Fit) -->
+<div class="denim-card flex flex-col bg-surface-container-low group cursor-pointer" data-fit="barrel">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Contemporary fashion shot of Barrel Fit Denim in Carbon Blue, distinct curved exaggerated outer leg seam, futuristic urban tailoring, model against charcoal architectural concrete." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF_YvoJSB3u-B_Tzeuhhd6OQ1NynO8P96-W2TjpS913DluMWl9K-UGpZApNZ6XSuWOMDnBbu3wP2nCfHBazf2vHv3yW_3yTzGEvIiLWzhrfY52fi5gMjEWON0XbWvK6Tfnfrp9YMKrukHv4vcOzdoXSqGZCfprQ_famE5JarXYpuds9YgVzV5Xp03CSgf6KBVJ1OUoIkjmBmYH3JDfmgA23IvNEe0k-YF5mUckKMI"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">20% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">BARREL</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Barrel Fit (Carbon Blue)
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹1,199</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,499</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">5 Sizes (28-36)</span>
+<button aria-label="Quick add" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Denim 8 (Bootcut - Midnight) -->
+<div class="denim-card flex flex-col bg-surface-container-low group cursor-pointer" data-fit="bootcut">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Editorial look of deep Midnight Blue Vintage Bootcut denim jeans with subtle whiskers, styled with heavy Cuban heel boots, dark minimal luxury urban fashion aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6x4GiQkXOgJvv4hZ28J1eQkodwq8PrFrEGQe3FimhYnWTILqT_5qqlRE4Z7tKrn7nwuwW4CscRvspXF9yOliXudOvLNaS51kEbu8ozi2-R6jMG1Vt195rGqQlUwHE2Vv3ytbl0P4etlgR5VNlau14PfLWeuZf0iyMFVn1eimswBP9voMcMUD-KPc3js6K2okPt451j2mcXA2y8TmG9dB8i4T2uMjO4fO1AAFtvJ4"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">20% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">BOOTCUT</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Vintage Bootcut (Midnight)
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹1,199</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,499</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">5 Sizes (28-36)</span>
+<button aria-label="Quick add" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- View All CTA -->
+<a class="w-full py-3 bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm uppercase tracking-widest text-center flex items-center justify-center gap-2 transition-colors" href="#">
+<span>VIEW ALL CLASSIC DENIM (106)</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</section>
+<!-- 3. ITEM OF THE DAY / SPOTLIGHT DROP -->
+<section class="w-full pt-10 px-4">
+<div class="w-full bg-surface-container-low p-5 flex flex-col space-y-4 relative overflow-hidden">
+<!-- Top header line -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-secondary font-bold tracking-widest">
+            ITEM OF THE DAY
+          </span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-outline tracking-wider">
+          01 // 08 SPOTLIGHT
+        </span>
+</div>
+<!-- Main product interactive showcase -->
+<div class="w-full aspect-[4/3] overflow-hidden bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="Editorial lookbook spotlight hero product photo of Vintage Bootcut Denim in Dust Blue finish. Clean dramatic front view showing distinctive subtle wash patterns, crisp denim grain, luxury streetwear drape and tailored hem." id="spotlight-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9o1oKQuUz3juTfjPJaTrm1SKBPKcPDQtDq1ak87mZ2voftPh2Phyh9GcCUgBdsQPxAkfq8uSfjPPeHr04hj9RdM4ZR9YPZbSe1H40qj9YEH-WotMrcUCETAtUgaxLfpx0cJqcW8jBP-zKBp3FKtPQLsvsk8bHe-m-XXzY9WsP9rm7FHXIsbffrky_mHpFcIF3i1QoS7Mlvf7W9jM1uZpH9xG_Bthw2pcdsCE7ngQ"/>
+<div class="absolute bottom-3 left-3 bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-2 py-1">
+          20% OFF TODAY ONLY
+        </div>
+</div>
+<!-- Details -->
+<div class="space-y-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md uppercase font-bold text-on-surface leading-tight">
+              Vintage Bootcut Denim
+            </h3>
+<p class="font-label-mono-sm text-label-mono-sm uppercase text-outline">Colorway: Dust Blue // Cut #04</p>
+</div>
+<button aria-label="Favorite item" class="w-9 h-9 bg-surface-container-high rounded-full flex items-center justify-center text-on-surface hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="flex items-baseline gap-2 pt-1">
+<span class="font-display-hero-mobile text-2xl font-bold text-pure-white">₹1,199.00</span>
+<span class="font-body-md text-body-md text-outline line-through">₹1,499.00</span>
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant font-medium">(Taxes included)</span>
+</div>
+</div>
+<!-- Size Selector -->
+<div class="space-y-2 pt-1">
+<div class="flex justify-between items-center">
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-on-surface font-semibold tracking-wider">
+            Select Waist Size (Inches)
+          </span>
+<button class="font-label-mono-sm text-[11px] text-outline underline uppercase hover:text-on-surface">
+            Size Guide
+          </button>
+</div>
+<div class="grid grid-cols-5 gap-2" id="size-options">
+<button class="size-btn py-2.5 bg-surface-container-high text-on-surface font-label-mono-lg text-label-mono-lg uppercase font-semibold text-center hover:bg-surface-bright transition-all" onclick="selectSize(this, '28')">
+            28
+          </button>
+<button class="size-btn py-2.5 bg-surface-container-high text-on-surface font-label-mono-lg text-label-mono-lg uppercase font-semibold text-center hover:bg-surface-bright transition-all" onclick="selectSize(this, '30')">
+            30
+          </button>
+<button class="size-btn py-2.5 bg-primary text-pitch-black font-label-mono-lg text-label-mono-lg uppercase font-bold text-center transition-all" onclick="selectSize(this, '32')">
+            32
+          </button>
+<button class="size-btn py-2.5 bg-surface-container-high text-on-surface font-label-mono-lg text-label-mono-lg uppercase font-semibold text-center hover:bg-surface-bright transition-all" onclick="selectSize(this, '34')">
+            34
+          </button>
+<button class="size-btn py-2.5 bg-surface-container-high text-on-surface font-label-mono-lg text-label-mono-lg uppercase font-semibold text-center hover:bg-surface-bright transition-all" onclick="selectSize(this, '36')">
+            36
+          </button>
+</div>
+</div>
+<!-- Quantity + Add to Cart -->
+<div class="pt-2 flex gap-3">
+<!-- Quantity counter -->
+<div class="flex items-center bg-surface-container-high px-2 py-1 w-28 justify-between">
+<button aria-label="Decrease quantity" class="w-8 h-8 flex items-center justify-center text-on-surface hover:text-pure-white" onclick="changeQty(-1)">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-on-surface" id="spotlight-qty">1</span>
+<button aria-label="Increase quantity" class="w-8 h-8 flex items-center justify-center text-on-surface hover:text-pure-white" onclick="changeQty(1)">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<!-- Add to cart CTA -->
+<button class="flex-1 bg-pure-white hover:bg-off-white text-pitch-black font-headline-sm text-headline-sm uppercase py-3 px-4 font-bold tracking-wider flex items-center justify-center gap-2 active:scale-[0.98] transition-all" id="add-to-cart-btn" onclick="triggerCartToast()">
+<span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+<span>ADD TO CART</span>
+</button>
+</div>
+<!-- Micro notification toast -->
+<div class="hidden bg-rust-leather text-pure-white p-2.5 text-center font-label-mono-sm text-label-mono-sm uppercase tracking-wider" id="cart-toast">
+        ✓ Vintage Bootcut (Dust Blue - 32) added to your bag
+      </div>
+</div>
+</section>
+<!-- 4. STYLE CATEGORIES (TOPWEAR & JACKETS) -->
+<section class="w-full pt-10 px-4 flex flex-col space-y-4">
+<div class="flex flex-col space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-outline tracking-widest">SEASONAL APPAREL</span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-secondary font-semibold">90 PIECES</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase font-bold text-on-surface">
+        SHOP BY STYLE — <span class="text-outline">TOPWEAR</span>
+</h2>
+</div>
+<!-- Category Switcher Tabs -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+<button class="topwear-tab px-4 py-2 bg-primary text-pitch-black font-headline-sm text-headline-sm uppercase tracking-wider font-semibold whitespace-nowrap transition-colors" onclick="filterTopwear(this, 'all')">
+        ALL TOPWEAR
+      </button>
+<button class="topwear-tab px-4 py-2 bg-surface-container-high text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider whitespace-nowrap hover:bg-surface-bright transition-colors" onclick="filterTopwear(this, 'shirts')">
+        SHIRTS
+      </button>
+<button class="topwear-tab px-4 py-2 bg-surface-container-high text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider whitespace-nowrap hover:bg-surface-bright transition-colors" onclick="filterTopwear(this, 'tshirts')">
+        T-SHIRTS
+      </button>
+<button class="topwear-tab px-4 py-2 bg-surface-container-high text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider whitespace-nowrap hover:bg-surface-bright transition-colors" onclick="filterTopwear(this, 'jackets')">
+        JACKETS
+      </button>
+</div>
+<!-- 2-Column Topwear Grid -->
+<div class="grid grid-cols-2 gap-3 pt-2" id="topwear-grid">
+<!-- Item 1: Astral Shirt -->
+<div class="topwear-item flex flex-col bg-surface-container-low group cursor-pointer" data-category="shirts">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Editorial lookbook photo of Astral Shirt in relaxed cobalt blue, cuban collar street styling, model in brutalist architecture shadows, crisp high fashion streetwear aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgvDYRXt75ybCCwynREMTqhWQ5RUE8Ogo10FluhNH6MqI8Hf4lsiQeZwVnqQsZbEPmIUgSVywWStrKV4ODBDIjyPntO2YPZhiF1S28eGNqQaKYCyh_AgE5Rta7xqjEunXVNdXQfI4VgnScJdUNrN1qy2SCKvPd8OzZwot1UEmObK5VzPg4Uu8LuIZiT6RKKPSCixEx9GHroHHSfkBNBYGA0fS5qhihpNTnsh5PYvo"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">18% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">SHIRT</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Astral Shirt (Blue)
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹899</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,099</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">4 Sizes (S-XL)</span>
+<button aria-label="Add to cart" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 2: Atelier Soc. Shirt -->
+<div class="topwear-item flex flex-col bg-surface-container-low group cursor-pointer" data-category="shirts">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Monochrome studio portrait of model wearing Atelier Society tailored woven shirt with raw edge chest pocket detail, modern avant-garde street silhouette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZ_YCL9TfaMFwxapoIUpcpGVhgGrVRhHAauzYqPusAzXQZttFh0yAay7nisy4m1ArvQpJJBX0xSQQJvGtSE_x8LnUpMbmfFUyGqqJQHJi-C_1H0R8k1ezDTOt3TO07pJulX89w2T-wy695vDA5qM24tUdvgU4sHKkOq9souKrQC0MdwueRgT3Edg7aeODYFGhpBksUwvMGyCnFpSM8v7Zb-zs3pqHgPmwbhTXB1GU"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">18% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">SHIRT</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Atelier Soc. Shirt
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹899</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,099</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">4 Sizes (S-XL)</span>
+<button aria-label="Add to cart" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 3: Washed Olive Tee -->
+<div class="topwear-item flex flex-col bg-surface-container-low group cursor-pointer" data-category="tshirts">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Editorial product shot of heavyweight 280 GSM Washed Olive Oversized Tee, dropped shoulder streetwear fit, vintage stone-washed dye effect against minimalist concrete surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx_nh7u5NMuYWbwzorPCX5UGSNLtDgXAfIzrRXFU62wcfso4YYoaqbS8Sdo0MhF_byp9QJMGawmcn-ysbZK4Txa8IKxaOCbHo-Al9e5KBgnB1wWn12ByfdrKYRAfbsfqin7dg0jMnB4EIyxAXEYwpcGdUn_fi6gETcT0a3TDIAFI7keCvPhtRp6jFtg-WqjTegG2GGU2p8wHZltceG5HpNUgdoN9bEa8OwrwCTmAo"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">18% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">TEE</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Washed Olive Tee
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹899</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹1,099</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">4 Sizes (S-XL)</span>
+<button aria-label="Add to cart" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 4: Work Jacket (Olive) -->
+<div class="topwear-item flex flex-col bg-surface-container-low group cursor-pointer" data-category="jackets">
+<div class="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Rugged utilitarian heavy canvas Work Jacket in Olive Drab tone with brass zipper and corduroy collar details, worn over raw denim, industrial warehouse background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2d99J1QFDsAieviXnBdRjOnakP2zGcucd0122IOaDjneIgbfDP_pFbRVVbrIPrge7DCjhfHjZwlFPbqSsJffiPeI0rRffb9gf2PXA7Ah5qFQf0DDnuGQbOaarmmYPIb6zbsFTbc1PvaTQW4Hh4u7hzd6vvK2d7sSRGHpL5sv2XKVn1HSdLgg7c2Netml8YQPcLhrjKMn1p5YDrZsPIhiYs4VF-1wFHY_nnTKwhMk"/>
+<div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
+<span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">15% OFF</span>
+<span class="bg-pitch-black/80 text-pure-white font-label-mono-sm text-[10px] px-1.5 py-0.5 uppercase">JACKET</span>
+</div>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">
+<h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface line-clamp-1">
+            Work Jacket (Olive)
+          </h3>
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-mono-lg text-label-mono-lg font-bold text-pure-white">₹3,199</span>
+<span class="font-label-mono-sm text-label-mono-sm text-outline line-through">₹3,799</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">4 Sizes (S-XL)</span>
+<button aria-label="Add to cart" class="w-7 h-7 bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary hover:text-pitch-black transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. SHOP THE LOOK (CURATED OUTFIT) -->
+<section class="w-full pt-10 px-4">
+<div class="w-full bg-surface-container-low p-4 flex flex-col space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-badge-caps text-badge-caps uppercase text-rust-leather tracking-widest font-bold">
+          CURATED ENSEMBLE
+        </span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-outline">
+          LOOK // 04
+        </span>
+</div>
+<div class="relative w-full aspect-[4/5] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Editorial full body streetwear shot of male model wearing tailored Drive Jacket in rich deep Burgundy faux-leather paired with oversized Vintage Bootcut Denim jeans and chunky boots. Styled urban luxury aesthetic, atmospheric moody dark night street background with cinematic amber neon highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZgu1q-cgt2lJx0hyfnx4QPQpWPIiYWGrN9-DQg7VjQVgrwOQvmH-XT55PJDXZZUymgAPkBTSSABMyUdAOXz3CKK5NfutHCIL5bMBQnYoklR0dzzs3R2aMY3F4dBdUlEe04ypGhl6xZf1WNOJxxJiSrduJFq3-dOAKL6-Qq7Nq8afWHqt-39dSWifPSW3tyfAELDphrmHn83_BLvuVej7zuj4SvMdF9ym8-bQoFOU"/>
+<div class="absolute bottom-3 left-3 bg-pitch-black/85 text-pure-white px-3 py-1 font-label-mono-sm text-label-mono-sm uppercase tracking-wider backdrop-blur-sm">
+          DRIVE JACKET + VINTAGE BOOTCUT
+        </div>
+</div>
+<!-- Micro combo items -->
+<div class="space-y-3 pt-1">
+<!-- Item 1 -->
+<div class="flex items-center justify-between bg-surface-container p-2.5">
+<div class="flex items-center gap-3">
+<div class="w-12 h-14 bg-surface-container-high overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Product macro shot of deep Burgundy tailored Drive Jacket textured collar and zipper pull." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3K-5H5GiVjTqiTcUIM2d0-XoA7Wu8DbWPExQMnNvxgDzQj1xNeUfhByTVJAA9DY9-u6e_TL8j2fHwN00R-MkhiQauzrYGM-ay2qIuTrv7p20ViLwzifqrMXXDznVDSGNjVY4kTOZgoDOBmx-LayhScRpzgH_aIC-DH6DIjuLSww9dMv-JjM5xBPalJ4x5xTKoAKyoSZV3owPqo9OcIk7yAk_6tgxQntHJzxpahUw"/>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm uppercase font-semibold text-on-surface">Drive Jacket (Burgundy)</p>
+<p class="font-label-mono-sm text-label-mono-sm text-pure-white font-bold">₹7,649.10 <span class="text-outline line-through font-normal">₹8,499</span></p>
+</div>
+</div>
+<button class="px-2.5 py-1.5 bg-surface-container-highest text-on-surface font-label-mono-sm text-label-mono-sm uppercase hover:bg-primary hover:text-pitch-black transition-colors">
+            Size M
+          </button>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between bg-surface-container p-2.5">
+<div class="flex items-center gap-3">
+<div class="w-12 h-14 bg-surface-container-high overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Macro view of Sun Faded Blue bootcut denim texture and selvedge hem detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYLhp0CjyagyUARsHCeul9HEujXwchHszuPS42flE82hNA0hc936cBSNOUC8HWmppQM0ZyFfJ7odg2kIVcWxrX3HVwaHnuRBNVPTIziMwEFyoer3aVdB39x0-KqMf24vamZaDDvj6vhpC0KsRIWbJ7AljftEp5M0CJ7zhWSVOibrwL4etpkrjMy2qCL4DjXJmuDjNZ6egEGXI2baiicKMS5vGOh1RZzIApPZMDMuc"/>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm uppercase font-semibold text-on-surface">Vintage Bootcut Denim</p>
+<p class="font-label-mono-sm text-label-mono-sm text-pure-white font-bold">₹1,199.00 <span class="text-outline line-through font-normal">₹1,499</span></p>
+</div>
+</div>
+<button class="px-2.5 py-1.5 bg-surface-container-highest text-on-surface font-label-mono-sm text-label-mono-sm uppercase hover:bg-primary hover:text-pitch-black transition-colors">
+            Size 32
+          </button>
+</div>
+</div>
+<!-- Combo Action -->
+<button class="w-full py-3.5 bg-primary text-pitch-black font-headline-sm text-headline-sm uppercase font-bold tracking-wider text-center flex items-center justify-center gap-2 hover:bg-pure-white transition-all active:scale-[0.98]" onclick="triggerLookToast()">
+<span class="material-symbols-outlined text-[20px]">style</span>
+<span>ADD COMPLETE LOOK TO CART (₹8,848.10)</span>
+</button>
+<div class="hidden bg-rust-leather text-pure-white p-2.5 text-center font-label-mono-sm text-label-mono-sm uppercase tracking-wider" id="look-toast">
+        ✓ Look #04 added to bag with 10% bundle discount
+      </div>
+</div>
+</section>
+<!-- 6. OFFLINE FLAGSHIP STORE EXPERIENCE -->
+<section class="w-full pt-10 px-4">
+<div class="w-full bg-surface-container-low p-5 flex flex-col space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-badge-caps text-badge-caps uppercase text-secondary font-bold tracking-widest">
+          PHYSICAL ARCHIVE
+        </span>
+<span class="flex items-center gap-1 font-label-mono-sm text-label-mono-sm text-outline">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span> OPEN TODAY
+        </span>
+</div>
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase font-bold text-on-surface leading-tight">
+          OUR OFFLINE STORE —<br/><span class="text-outline">CHAPEL RD, BANDRA</span>
+</h2>
+<p class="font-body-md text-body-md text-on-surface-variant pt-2 leading-relaxed">
+          “Three years online. Now, somewhere to feel the denim for yourself.”
+        </p>
+</div>
+<!-- Interactive Map Visual Container -->
+<div class="relative w-full h-48 overflow-hidden bg-surface-container" data-location="29 Chapel Rd Ranwar Village Bandra West Mumbai" style="">
+<div class="absolute inset-0 bg-gradient-to-t from-pitch-black/80 to-transparent flex flex-col justify-end p-3">
+<p class="font-headline-sm text-headline-sm uppercase font-bold text-pure-white">HIVE BANDRA WEST</p>
+<p class="font-label-mono-sm text-label-mono-sm text-on-surface-variant">29, Chapel Rd, Ranwar Village, Bandra West, Mumbai 400 050</p>
+</div>
+</div>
+<!-- Timings and Details -->
+<div class="grid grid-cols-2 gap-2 bg-surface-container p-3">
+<div>
+<span class="font-label-mono-sm text-[10px] uppercase text-outline block">STORE HOURS</span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-on-surface font-semibold">ALL DAYS: 11AM – 9:30PM</span>
+</div>
+<div>
+<span class="font-label-mono-sm text-[10px] uppercase text-outline block">CONCIERGE</span>
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-on-surface font-semibold">+91 8657868181</span>
+</div>
+</div>
+<!-- CTAs -->
+<div class="grid grid-cols-2 gap-2 pt-1">
+<a class="py-3 bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm uppercase font-semibold text-center flex items-center justify-center gap-1.5 transition-colors" href="https://maps.google.com" target="_blank">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+<span>DIRECTIONS</span>
+</a>
+<a class="py-3 bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm uppercase font-semibold text-center flex items-center justify-center gap-1.5 transition-colors" href="tel:+918657868181">
+<span class="material-symbols-outlined text-[18px]">call</span>
+<span>CALL STORE</span>
+</a>
+</div>
+</div>
+</section>
+<!-- 7. CUSTOMER VOICES & REVIEWS -->
+<section class="w-full pt-10 px-4 flex flex-col space-y-4">
+<div class="flex flex-col space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-label-mono-sm uppercase text-outline tracking-widest">VERIFIED WORDS</span>
+<div class="flex text-rust-leather text-xs">
+          ★★★★★
+        </div>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase font-bold text-on-surface leading-snug">
+        THESE ARE ALL REAL PEOPLE,<br/><span class="text-outline">REAL WORDS — THIS IS HIVE.</span>
+</h2>
+</div>
+<!-- Review Cards (Horizontal Carousel) -->
+<div class="flex gap-3 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory">
+<!-- Review 1 -->
+<div class="min-w-[260px] max-w-[280px] bg-surface-container-low p-4 flex flex-col justify-between space-y-3 snap-start">
+<div class="space-y-2">
+<div class="flex text-secondary text-sm">★★★★★</div>
+<p class="font-body-md text-body-md text-on-surface italic leading-relaxed">
+            “love ur service btw and also the quality is insane. The fit on the vintage bootcut is unlike anything else in India right now.”
+          </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-mono-sm text-label-mono-sm uppercase font-bold text-primary">Arun M.</span>
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">Verified Buyer</span>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="min-w-[260px] max-w-[280px] bg-surface-container-low p-4 flex flex-col justify-between space-y-3 snap-start">
+<div class="space-y-2">
+<div class="flex text-secondary text-sm">★★★★★</div>
+<p class="font-body-md text-body-md text-on-surface italic leading-relaxed">
+            “Superb quality clothes at affordable prices. Really loved the fit and finish of the clothes. Highly recommend.”
+          </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-mono-sm text-label-mono-sm uppercase font-bold text-primary">Mohammed Rayyan</span>
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">Verified Buyer</span>
+</div>
+</div>
+<!-- Review 3 -->
+<div class="min-w-[260px] max-w-[280px] bg-surface-container-low p-4 flex flex-col justify-between space-y-3 snap-start">
+<div class="space-y-2">
+<div class="flex text-secondary text-sm">★★★★★</div>
+<p class="font-body-md text-body-md text-on-surface italic leading-relaxed">
+            “The wait to get the drop was slightly longer, but absolutely worth it. The brand, the aesthetic, the denim weight. I’m hooked.”
+          </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-mono-sm text-label-mono-sm uppercase font-bold text-primary">Pranav C.</span>
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">Verified Buyer</span>
+</div>
+</div>
+<!-- Review 4 -->
+<div class="min-w-[260px] max-w-[280px] bg-surface-container-low p-4 flex flex-col justify-between space-y-3 snap-start">
+<div class="space-y-2">
+<div class="flex text-secondary text-sm">★★★★★</div>
+<p class="font-body-md text-body-md text-on-surface italic leading-relaxed">
+            “Customer service at the Bandra shop was genuinely attentive. The baggy cuts sit so naturally over sneakers.”
+          </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-mono-sm text-label-mono-sm uppercase font-bold text-primary">Faheem Fazil</span>
+<span class="font-label-mono-sm text-[10px] text-outline uppercase">Verified Buyer</span>
+</div>
+</div>
+</div>
+<!-- Review Action -->
+<div class="pt-2 flex flex-col space-y-2">
+<button class="w-full py-3 bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider text-center flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">rate_review</span>
+<span>WRITE A REVIEW</span>
+</button>
+<a class="w-full py-3 bg-rust-leather text-pure-white font-headline-sm text-headline-sm uppercase tracking-wider text-center flex items-center justify-center gap-2 transition-opacity hover:opacity-95" href="https://instagram.com" target="_blank">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+<span>JOIN THE COMMUNITY ON INSTAGRAM</span>
+</a>
+</div>
+</section>
+<!-- 8. REFINED FOOTER ATTRIBUTION & ASSURANCES -->
+<section class="w-full pt-12 px-4 flex flex-col space-y-6">
+<div class="grid grid-cols-2 gap-3 py-4 bg-surface-container-low p-4">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[24px]">local_shipping</span>
+<div>
+<p class="font-headline-sm text-headline-sm uppercase text-on-surface">PAN INDIA</p>
+<p class="font-label-mono-sm text-[10px] text-outline uppercase">Free over ₹1,999</p>
+</div>
+</div>
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[24px]">published_with_changes</span>
+<div>
+<p class="font-headline-sm text-headline-sm uppercase text-on-surface">7-DAY RETURNS</p>
+<p class="font-label-mono-sm text-[10px] text-outline uppercase">Hassle-free exchange</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col space-y-2 pt-2">
+<div class="flex flex-wrap gap-x-4 gap-y-2 font-label-mono-sm text-label-mono-sm text-outline uppercase">
+<a class="hover:text-primary transition-colors" href="#">Track Order</a>
+<a class="hover:text-primary transition-colors" href="#">Returns Portal</a>
+<a class="hover:text-primary transition-colors" href="#">Size Guide</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+</div>
+<p class="font-label-mono-sm text-[10px] text-outline pt-2 uppercase">
+        © 2025 HIVE CLOTHING CO. ALL RIGHTS RESERVED. BOMBAY, INDIA.
+      </p>
+</div>
+</section>
+</div>
+<!-- CLIENT MICRO-INTERACTION LOGIC -->
+<script>
+  // Filter logic for Fit Selector
+  function filterFit(btn, fitCategory) {
+    const pills = document.querySelectorAll('.fit-btn');
+    pills.forEach(p => {
+      p.classList.remove('bg-primary', 'text-pitch-black', 'font-semibold');
+      p.classList.add('bg-surface-container-high', 'text-on-surface');
+    });
+    btn.classList.remove('bg-surface-container-high', 'text-on-surface');
+    btn.classList.add('bg-primary', 'text-pitch-black', 'font-semibold');
+
+    const cards = document.querySelectorAll('.denim-card');
+    cards.forEach(card => {
+      if (fitCategory === 'all' || card.getAttribute('data-fit') === fitCategory) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Filter logic for Topwear
+  function filterTopwear(btn, cat) {
+    const tabs = document.querySelectorAll('.topwear-tab');
+    tabs.forEach(t => {
+      t.classList.remove('bg-primary', 'text-pitch-black', 'font-semibold');
+      t.classList.add('bg-surface-container-high', 'text-on-surface');
+    });
+    btn.classList.remove('bg-surface-container-high', 'text-on-surface');
+    btn.classList.add('bg-primary', 'text-pitch-black', 'font-semibold');
+
+    const items = document.querySelectorAll('.topwear-item');
+    items.forEach(item => {
+      if (cat === 'all' || item.getAttribute('data-category') === cat) {
+        item.style.display = 'flex';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // Size Picker Selection
+  function selectSize(btn, size) {
+    const sizeBtns = document.querySelectorAll('.size-btn');
+    sizeBtns.forEach(b => {
+      b.classList.remove('bg-primary', 'text-pitch-black', 'font-bold');
+      b.classList.add('bg-surface-container-high', 'text-on-surface');
+    });
+    btn.classList.remove('bg-surface-container-high', 'text-on-surface');
+    btn.classList.add('bg-primary', 'text-pitch-black', 'font-bold');
+  }
+
+  // Quantity modification
+  let qty = 1;
+  function changeQty(delta) {
+    qty = Math.max(1, qty + delta);
+    document.getElementById('spotlight-qty').innerText = qty;
+  }
+
+  // Cart Toasts
+  function triggerCartToast() {
+    const toast = document.getElementById('cart-toast');
+    toast.classList.remove('hidden');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 3200);
+  }
+
+  function triggerLookToast() {
+    const toast = document.getElementById('look-toast');
+    toast.classList.remove('hidden');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 3200);
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_12px_rgba(0,0,0,0.3)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-2"><a aria-current="page" class="flex flex-col items-center justify-center gap-1 w-16 h-12 transition-colors text-primary font-bold" data-path="home" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider">Home</span></a><a class="flex flex-col items-center justify-center gap-1 w-16 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="shop-catalog" href="#"><span class="material-symbols-outlined text-[22px]">grid_view</span><span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider">Shop</span></a><a class="flex flex-col items-center justify-center gap-1 w-16 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="drops" href="#"><span class="material-symbols-outlined text-[22px]">local_fire_department</span><span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider">Drops</span></a><a class="flex flex-col items-center justify-center gap-1 w-16 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="account" href="#"><span class="material-symbols-outlined text-[22px]">person</span><span class="font-label-mono-sm text-label-mono-sm uppercase tracking-wider">Account</span></a></div></nav></body></html>
