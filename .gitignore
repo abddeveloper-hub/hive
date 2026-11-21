@@ -1,9 +1,28 @@
-# OS files
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# next.js build
+/.next/
+/out/
+/build
+
+# environment
+.env*.local
+
+# debug & logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# OS & IDE
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Logs & temp
-*.log
 .vscode/
 .idea/
+
+# typescript
+next-env.d.ts

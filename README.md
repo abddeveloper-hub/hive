@@ -1,38 +1,65 @@
-# HIVE — Campus Chaos | Streetwear & Denim Storefront
+# HIVE — Campus Chaos | Next.js Streetwear & Denim Storefront
 
-A dark-aesthetic, brutalist e-commerce web application for **HIVE**, featuring archival denim cuts, heavyweight selvedge, and urban streetwear.
+A modern, scalable component-based e-commerce web application for **HIVE**, built with **Next.js 14 (App Router)**, **TypeScript**, and **Tailwind CSS**.
 
-## ⚡ Features
+---
 
-- **Brutalist Dark Design System**: Industrial obsidian (`#131313`) palette, rust-leather accents, Space Grotesk & JetBrains Mono typography.
-- **Interactive Denim Selector ("Shop by Fit")**: Real-time filtering across Bootcut, Straight, Baggy, and Barrel silhouettes.
-- **Spotlight Drop ("Item of the Day")**: Interactive waist size selector (28–36), quantity modifier, and animated cart feedback toasts.
-- **Curated Ensembles ("Shop the Look")**: Drive Jacket + Bootcut combo package with one-click bundle cart addition.
-- **Topwear Showcase**: Category tabs for Shirts, Oversized Tees, and Heavyweight Jackets.
-- **Flagship Store Hub**: Bandra West (Mumbai) physical archive locator with direct Google Maps directions and concierge hotline.
-- **Customer Reviews**: Verified customer feedback carousel and Instagram community portal.
-- **Mobile-First Experience**: Fixed announcement header, persistent bottom navigation tabs, and fluid mobile touch layouts.
+## ⚡ Key Highlights & Architecture
+
+- **Next.js 14 App Router**: Production-optimized static pre-rendering, automatic font optimization (`Space Grotesk`, `JetBrains Mono`, `Hanken Grotesk`), and lightning-fast client hydration.
+- **Centralized Cart State (`CartContext`)**:
+  - Global reactive cart counter and slide-over **Cart Drawer**.
+  - LocalStorage persistence so customer bags persist across refreshes.
+  - Interactive quantity modifiers, size selections, and item deletion.
+  - Dynamic **Free Pan-India Shipping meter** (unlocks above ₹1,999).
+  - Direct **WhatsApp Instant Order generator** pre-formatting items, sizes, quantities, and totals.
+- **Component-Driven Modular Architecture**:
+  - `components/Header.tsx` — Announcement ticker, brand logo, search/wishlist/bag indicators.
+  - `components/Hero.tsx` — Editorial Campus Chaos lookbook hero banner.
+  - `components/Ticker.tsx` — Brutalist marquee brand ticker.
+  - `components/DenimCatalog.tsx` & `ProductCard.tsx` — Fit filter tabs (Bootcut, Straight, Baggy, Barrel) and reusable product cards.
+  - `components/SpotlightDrop.tsx` — Item of the Day with interactive waist size selector and quantity counter.
+  - `components/TopwearCatalog.tsx` — Categorized seasonal apparel (Shirts, Tees, Jackets).
+  - `components/CuratedLook.tsx` — Curated multi-item ensemble with 10% bundle discount.
+  - `components/FlagshipStore.tsx` — Bandra West (Mumbai) physical archive locator with direct Google Maps & phone concierge.
+  - `components/CustomerReviews.tsx` — Real verified reviews carousel & Instagram portal.
+  - `components/CartDrawer.tsx` — Slide-over bag drawer with live pricing and WhatsApp checkout.
+  - `components/BottomNav.tsx` — Fixed mobile navigation.
+- **Data-Driven Storefront (`data/products.ts`)**:
+  - All denim styles, topwear items, lookbook ensembles, and customer reviews cleanly separated into typed data objects.
+
+---
 
 ## 🛠 Tech Stack
 
-- **HTML5 & CSS3**
-- **Tailwind CSS (CDN)**
-- **Google Fonts**: Space Grotesk, Hanken Grotesk, JetBrains Mono
-- **Material Symbols Outlined**
-- **Vanilla JavaScript**
+- **Framework**: [Next.js 14 (App Router)](https://nextjs.org/)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS & PostCSS
+- **State Management**: React Context (`useCart`)
+- **Typography**: Space Grotesk, JetBrains Mono, Hanken Grotesk, Google Material Symbols
 
-## 💻 Local Preview
+---
 
-Open `index.html` in any browser, or run a local server:
+## 🚀 Getting Started
 
+### 1. Install Dependencies
 ```bash
-# Python
-python -m http.server 8000
-
-# Node.js
-npx serve .
+npm install
 ```
 
-## 📄 License
+### 2. Run Local Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### 3. Production Build
+```bash
+npm run build
+npm run start
+```
+
+---
+
+## 📄 License
 MIT
