@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>HIVE // HQ Operations & Fulfillment Matrix</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet"/>
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; background-color: #0a0a0a; color: #e5e2e1; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: #0e0e0e; }
+    ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: #444748; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "pitch-black": "#000000",
+            "surface-dark": "#0a0a0a",
+            "surface-container-lowest": "#0e0e0e",
+            "surface-subtle": "#111111",
+            "surface": "#131313",
+            "surface-container-low": "#1c1b1b",
+            "surface-container": "#201f1f",
+            "surface-container-high": "#2a2a2a",
+            "surface-container-highest": "#353534",
+            "surface-variant": "#353534",
+            "surface-bright": "#3a3939",
+            "line-subtle": "#222222",
+            "line-light": "#e5e5e5",
+            "rust-leather": "#6d3929",
+            "slate-denim": "#4b6b82",
+            "outline": "#8e9192",
+            "outline-variant": "#444748",
+            "on-surface": "#e5e2e1",
+            "on-surface-variant": "#c4c7c8",
+            "on-background": "#e5e2e1",
+            "pure-white": "#ffffff",
+            "off-white": "#f7f7f7",
+            "primary": "#ffffff",
+            "primary-container": "#e2e2e2",
+            "primary-fixed": "#e2e2e2",
+            "primary-fixed-dim": "#c6c6c7",
+            "secondary": "#ffb59f",
+            "secondary-container": "#6c3828",
+            "error": "#ffb4ab",
+            "error-container": "#93000a"
+          },
+          fontFamily: {
+            "headline-lg": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Space Grotesk", "sans-serif"],
+            "headline-sm": ["Space Grotesk", "sans-serif"],
+            "label-mono-lg": ["JetBrains Mono", "monospace"],
+            "label-mono-sm": ["JetBrains Mono", "monospace"],
+            "body-lg": ["Hanken Grotesk", "sans-serif"],
+            "body-md": ["Hanken Grotesk", "sans-serif"],
+            "body-sm": ["Hanken Grotesk", "sans-serif"],
+            "badge-caps": ["Space Grotesk", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-pitch-black font-body-md text-on-surface antialiased selection:bg-rust-leather selection:text-pure-white flex h-screen overflow-hidden">
+
+  <!-- LEFT CONTROL SIDEBAR -->
+  <aside class="w-64 border-r border-line-subtle bg-surface-dark flex flex-col justify-between shrink-0 select-none">
+    <div class="flex flex-col">
+      <!-- HQ Brand header -->
+      <div class="p-5 border-b border-line-subtle">
+        <div class="flex items-center justify-between">
+          <a href="index.html" class="flex items-center gap-2 group">
+            <span class="font-headline-lg text-2xl font-black uppercase tracking-tighter text-pure-white group-hover:text-secondary transition-colors">HIVE</span>
+            <span class="px-1.5 py-0.5 bg-rust-leather text-pure-white text-[10px] font-label-mono-sm uppercase tracking-widest font-bold">HQ</span>
+          </a>
+          <span class="flex h-2 w-2 relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+        </div>
+        <p class="font-label-mono-sm text-[10px] uppercase text-outline tracking-wider mt-1">COMMAND MATRIX // V2.4</p>
+      </div>
+
+      <!-- Navigation Matrix -->
+      <nav class="p-3 space-y-1">
+        <button onclick="setTab('overview')" id="nav-overview" class="w-full flex items-center justify-between px-3 py-2.5 bg-surface-container text-pure-white border-l-2 border-rust-leather text-xs font-label-mono-sm uppercase tracking-wider transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-[18px]">dashboard</span>
+            <span>Overview</span>
+          </div>
+          <span class="text-[10px] bg-rust-leather px-1.5 py-0.2 font-bold">LIVE</span>
+        </button>
+
+        <button onclick="setTab('orders')" id="nav-orders" class="w-full flex items-center justify-between px-3 py-2.5 text-outline hover:text-pure-white hover:bg-surface-container-high text-xs font-label-mono-sm uppercase tracking-wider transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-[18px]">local_shipping</span>
+            <span>Order Flow</span>
+          </div>
+          <span class="text-[10px] text-secondary" id="sidebar-order-count">5 PENDING</span>
+        </button>
+
+        <button onclick="setTab('inventory')" id="nav-inventory" class="w-full flex items-center justify-between px-3 py-2.5 text-outline hover:text-pure-white hover:bg-surface-container-high text-xs font-label-mono-sm uppercase tracking-wider transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+            <span>Inventory Matrix</span>
+          </div>
+          <span class="text-[10px] text-rose-400">3 LOW</span>
+        </button>
+
+        <button onclick="setTab('flagship')" id="nav-flagship" class="w-full flex items-center justify-between px-3 py-2.5 text-outline hover:text-pure-white hover:bg-surface-container-high text-xs font-label-mono-sm uppercase tracking-wider transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-[18px]">storefront</span>
+            <span>Flagship POS</span>
+          </div>
+          <span class="text-[10px] text-emerald-400">SYNCED</span>
+        </button>
+
+        <button onclick="setTab('analytics')" id="nav-analytics" class="w-full flex items-center justify-between px-3 py-2.5 text-outline hover:text-pure-white hover:bg-surface-container-high text-xs font-label-mono-sm uppercase tracking-wider transition-all">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-[18px]">analytics</span>
+            <span>Telemetry</span>
+          </div>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="p-4 border-t border-line-subtle space-y-3 bg-surface-container-lowest">
+      <div class="p-2.5 bg-surface-dark border border-line-subtle space-y-1">
+        <div class="flex items-center justify-between text-[11px] font-label-mono-sm">
+          <span class="text-outline uppercase">Chapel Rd Register</span>
+          <span class="text-emerald-400 font-bold">ONLINE</span>
+        </div>
+        <p class="text-[10px] text-outline-variant font-label-mono-sm">Bandra West, Mumbai // Terminal 01</p>
+      </div>
+
+      <div class="flex items-center justify-between pt-1">
+        <a href="index.html" class="flex items-center gap-1.5 text-xs font-label-mono-sm text-outline hover:text-pure-white transition-colors">
+          <span class="material-symbols-outlined text-base">arrow_back</span>
+          <span>Return Store</span>
+        </a>
+        <span class="text-[10px] font-label-mono-sm text-outline-variant">OPERATOR: HQ</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <div class="flex-1 flex flex-col h-screen overflow-hidden">
+
+    <!-- TOP TELEMETRY BAR -->
+    <header class="h-16 border-b border-line-subtle bg-surface flex items-center justify-between px-6 shrink-0">
+      <div class="flex items-center gap-4 flex-1 max-w-xl">
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+          <input
+            id="admin-search-input"
+            oninput="handleSearch(this.value)"
+            type="text"
+            placeholder="Search Order ID, SKU, Customer name, City..."
+            class="w-full bg-surface-container-lowest border border-line-subtle pl-9 pr-4 py-2 text-xs font-label-mono-sm text-pure-white placeholder-outline focus:border-rust-leather focus:outline-none transition-colors"
+          />
+        </div>
+
+        <!-- Channel Filter -->
+        <div class="flex items-center border border-line-subtle bg-surface-container-lowest p-0.5 shrink-0">
+          <button onclick="setChannel('all')" id="btn-chan-all" class="px-2.5 py-1 text-[11px] font-label-mono-sm bg-primary text-pitch-black font-semibold uppercase">ALL</button>
+          <button onclick="setChannel('online')" id="btn-chan-online" class="px-2.5 py-1 text-[11px] font-label-mono-sm text-outline hover:text-pure-white uppercase">ONLINE</button>
+          <button onclick="setChannel('pos')" id="btn-chan-pos" class="px-2.5 py-1 text-[11px] font-label-mono-sm text-outline hover:text-pure-white uppercase">BANDRA POS</button>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="flex items-center gap-3">
+        <button onclick="openPosModal()" class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-high hover:bg-surface-bright border border-line-subtle text-xs font-label-mono-sm text-pure-white uppercase tracking-wider transition-all">
+          <span class="material-symbols-outlined text-sm text-secondary">point_of_sale</span>
+          <span>New In-Store Sale</span>
+        </button>
+
+        <button onclick="openNewDropModal()" class="flex items-center gap-1.5 px-3 py-2 bg-rust-leather hover:bg-[#864431] text-xs font-label-mono-sm text-pure-white font-bold uppercase tracking-wider transition-all shadow-sm">
+          <span class="material-symbols-outlined text-sm">add_box</span>
+          <span>+ Deploy SKU / Drop</span>
+        </button>
+
+        <button onclick="exportCsvManifest()" title="Export CSV Manifest" class="p-2 border border-line-subtle bg-surface-container hover:bg-surface-container-high text-outline hover:text-pure-white transition-colors">
+          <span class="material-symbols-outlined text-base">download</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT BODY (SCROLLABLE) -->
+    <main class="flex-1 overflow-y-auto p-6 space-y-6">
+
+      <!-- KPI PULSE CARDS -->
+      <section class="grid grid-cols-4 gap-4">
+        <div class="bg-surface border border-line-subtle p-4 space-y-1 relative overflow-hidden">
+          <div class="flex items-center justify-between text-outline font-label-mono-sm text-[11px] uppercase">
+            <span>NET REVENUE TODAY</span>
+            <span class="text-emerald-400">+18.4%</span>
+          </div>
+          <div class="font-headline-lg text-2xl font-bold text-pure-white tracking-tight" id="kpi-rev">₹4,82,350.00</div>
+          <p class="font-label-mono-sm text-[10px] text-outline-variant">Gross GMV Across 2 Channels</p>
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-rust-leather"></div>
+        </div>
+
+        <div class="bg-surface border border-line-subtle p-4 space-y-1 relative overflow-hidden">
+          <div class="flex items-center justify-between text-outline font-label-mono-sm text-[11px] uppercase">
+            <span>LIVE CONVERSION RATE</span>
+            <span class="text-emerald-400">3.42%</span>
+          </div>
+          <div class="font-headline-lg text-2xl font-bold text-pure-white tracking-tight">3.8% PEAK</div>
+          <p class="font-label-mono-sm text-[10px] text-outline-variant">Traffic: 1,840 Active Sessions</p>
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary"></div>
+        </div>
+
+        <div class="bg-surface border border-line-subtle p-4 space-y-1 relative overflow-hidden">
+          <div class="flex items-center justify-between text-outline font-label-mono-sm text-[11px] uppercase">
+            <span>ACTIVE DISPATCH QUEUE</span>
+            <span class="text-amber-400" id="kpi-queue">14 ORDERS</span>
+          </div>
+          <div class="font-headline-lg text-2xl font-bold text-pure-white tracking-tight" id="kpi-awaiting">6 AWAITING PICKUP</div>
+          <p class="font-label-mono-sm text-[10px] text-outline-variant">Avg Pickup Latency: 42 mins</p>
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
+        </div>
+
+        <div class="bg-surface border border-line-subtle p-4 space-y-1 relative overflow-hidden">
+          <div class="flex items-center justify-between text-outline font-label-mono-sm text-[11px] uppercase">
+            <span>FLAGSHIP REGISTER</span>
+            <span class="text-emerald-400 font-bold">LIVE SYNC</span>
+          </div>
+          <div class="font-headline-lg text-2xl font-bold text-pure-white tracking-tight" id="kpi-pos">₹98,400.00</div>
+          <p class="font-label-mono-sm text-[10px] text-outline-variant">28 Walk-ins // Bandra Chapel Rd</p>
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500"></div>
+        </div>
+      </section>
+
+      <!-- 2-COLUMN SPLIT: ORDERS & OPERATIONS -->
+      <div class="grid grid-cols-12 gap-6">
+
+        <!-- ORDERS STREAM (8 COLUMNS) -->
+        <section class="col-span-8 space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary">local_shipping</span>
+              <h2 class="font-headline-sm uppercase font-bold text-pure-white tracking-wider">Live Order Stream & Fulfillment</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-label-mono-sm text-[11px] text-outline" id="order-count-badge">SHOWING 5 OF 5 ORDERS</span>
+              <button onclick="renderOrders()" class="text-xs font-label-mono-sm text-outline hover:text-pure-white flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">refresh</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Order Table Container -->
+          <div class="border border-line-subtle bg-surface overflow-hidden">
+            <div class="grid grid-cols-12 bg-surface-container-high px-4 py-3 text-[11px] font-label-mono-sm uppercase text-outline tracking-wider border-b border-line-subtle">
+              <div class="col-span-2">ORDER // TIME</div>
+              <div class="col-span-3">CUSTOMER // CITY</div>
+              <div class="col-span-4">ITEMS & SPECIFICATIONS</div>
+              <div class="col-span-3 text-right">STATUS // ACTIONS</div>
+            </div>
+
+            <!-- Scrollable list of orders -->
+            <div id="orders-stream-list" class="divide-y divide-line-subtle max-h-[580px] overflow-y-auto">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT OPERATIONS PANEL (4 COLUMNS) -->
+        <aside class="col-span-4 space-y-6">
+
+          <!-- CRITICAL INVENTORY RUNOUT -->
+          <div class="border border-line-subtle bg-surface p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-rose-400 text-lg">warning</span>
+                <h3 class="font-headline-sm text-sm uppercase font-bold text-pure-white tracking-wider">Stock Depletion Matrix</h3>
+              </div>
+              <span class="font-label-mono-sm text-[10px] text-rose-400 bg-rose-950/40 px-1.5 py-0.5 border border-rose-800">ALERT</span>
+            </div>
+
+            <p class="font-label-mono-sm text-[11px] text-outline">Real-time inventory levels across central warehouse & Bandra hub.</p>
+
+            <div class="space-y-3 pt-1" id="inventory-matrix-list">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+
+          <!-- FLAGSHIP LIVE REGISTER HITS -->
+          <div class="border border-line-subtle bg-surface p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-emerald-400 text-lg">store</span>
+                <h3 class="font-headline-sm text-sm uppercase font-bold text-pure-white tracking-wider">Bandra Flagship Telemetry</h3>
+              </div>
+              <span class="font-label-mono-sm text-[10px] text-emerald-400 bg-emerald-950/40 px-1.5 py-0.5 border border-emerald-800">ACTIVE</span>
+            </div>
+
+            <div class="space-y-2" id="pos-hits-list">
+              <!-- Populated via JS -->
+            </div>
+
+            <div class="pt-2 border-t border-line-subtle flex items-center justify-between">
+              <span class="font-label-mono-sm text-[11px] text-outline">POS HARDWARE STATUS</span>
+              <span class="font-label-mono-sm text-[11px] text-emerald-400">PINELABS 4G CONNECTED</span>
+            </div>
+          </div>
+
+          <!-- LOGISTICS CARRIER TELEMETRY -->
+          <div class="border border-line-subtle bg-surface p-4 space-y-2">
+            <h4 class="font-headline-sm text-xs uppercase font-bold text-pure-white tracking-wider">Pan-India Carrier SLAs</h4>
+            <div class="space-y-1.5 font-label-mono-sm text-[11px] text-outline">
+              <div class="flex items-center justify-between">
+                <span>Bluedart Air Express (Metro)</span>
+                <span class="text-emerald-400">99.2% on-time</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span>Delhivery Surface Tier 2/3</span>
+                <span class="text-amber-400">94.8% on-time</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span>DTDC Priority Surface</span>
+                <span class="text-emerald-400">97.6% on-time</span>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- TOAST FEEDBACK -->
+  <div id="admin-toast" class="fixed bottom-6 right-6 z-50 bg-rust-leather text-pure-white px-4 py-3 border border-secondary shadow-2xl font-label-mono-sm text-xs uppercase tracking-wider transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2 pointer-events-none">
+    <span class="material-symbols-outlined text-base">check_circle</span>
+    <span id="toast-text">Action completed successfully</span>
+  </div>
+
+  <!-- MODAL 1: NEW DROP / SKU DEPLOYMENT -->
+  <div id="modal-new-drop" class="fixed inset-0 z-50 bg-pitch-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-surface border border-line-light/20 w-full max-w-lg p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-line-subtle pb-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">add_box</span>
+          <h3 class="font-headline-md uppercase font-bold text-pure-white">Deploy New Archival SKU</h3>
+        </div>
+        <button onclick="closeNewDropModal()" class="text-outline hover:text-pure-white">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form onsubmit="handleDeploySku(event)" class="space-y-4 text-xs font-label-mono-sm">
+        <div class="space-y-1">
+          <label class="text-outline uppercase">Garment Title / Drop Label</label>
+          <input required id="drop-name" type="text" value="Flare Cut Raw Indigo Denim" class="w-full bg-surface-container-lowest border border-line-subtle px-3 py-2 text-pure-white focus:border-rust-leather focus:outline-none"/>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="text-outline uppercase">Category</label>
+            <select id="drop-cat" class="w-full bg-surface-container-lowest border border-line-subtle px-3 py-2 text-pure-white focus:border-rust-leather focus:outline-none">
+              <option value="denim">Heavyweight Denim</option>
+              <option value="topwear">Topwear & Knits</option>
+              <option value="outerwear">Outerwear & Jackets</option>
+            </select>
+          </div>
+          <div class="space-y-1">
+            <label class="text-outline uppercase">Fit Silhouette</label>
+            <select id="drop-fit" class="w-full bg-surface-container-lowest border border-line-subtle px-3 py-2 text-pure-white focus:border-rust-leather focus:outline-none">
+              <option value="bootcut">Vintage Bootcut</option>
+              <option value="straight">Classic Straight</option>
+              <option value="baggy">90s Wide Baggy</option>
+              <option value="barrel">Architectural Barrel</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="text-outline uppercase">Retail Price (INR)</label>
+            <input required id="drop-price" type="number" value="1399" class="w-full bg-surface-container-lowest border border-line-subtle px-3 py-2 text-pure-white focus:border-rust-leather focus:outline-none"/>
+          </div>
+          <div class="space-y-1">
+            <label class="text-outline uppercase">Initial Batch Allocation</label>
+            <input required id="drop-stock" type="number" value="25" class="w-full bg-surface-container-lowest border border-line-subtle px-3 py-2 text-pure-white focus:border-rust-leather focus:outline-none"/>
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-3 border-t border-line-subtle">
+          <button type="button" onclick="closeNewDropModal()" class="px-4 py-2 text-outline hover:text-pure-white uppercase">Cancel</button>
+          <button type="submit" class="px-5 py-2.5 bg-rust-leather text-pure-white font-bold uppercase tracking-wider hover:bg-[#864431] transition-colors">
+            Deploy to Production
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: LIVE POS TERMINAL REGISTER -->
+  <div id="modal-pos" class="fixed inset-0 z-50 bg-pitch-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-surface border border-line-light/20 w-full max-w-md p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-line-subtle pb-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">point_of_sale</span>
+          <h3 class="font-headline-md uppercase font-bold text-pure-white">Bandra Flagship POS Register</h3>
+        </div>
+        <button onclick="closePosModal()" class="text-outline hover:text-pure-white">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form onsubmit="handlePosCheckout(event)" class="space-y-4 text-xs font-label-mono-sm">
+        <div class="space-y-1">
+          <label class="text-outline uppercase">Walk-in Customer Name</label>
+          <input required id="pos-customer" type="text" placeholder="e.g. Siddharth Kapoor" class="w-full bg-surface-container-lowest border border-line-subtle px-3 py-2 text-pure-white focus:border-rust-leather focus:outline-none"/>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-outline uppercase">Select Garment / Item</label>
+          <select id="pos-item" class="w-full bg-surface-container-lowest border border-line-subtle px-3 py-2 text-pure-white focus:border-rust-leather focus:outline-none">
+            <option value="Vintage Bootcut (Dust Blue - 32)|1199">Vintage Bootcut (Dust Blue - 32) — ₹1,199</option>
+            <option value="Baggy Fit Denim (Rustic Wash - 30)|1299">Baggy Fit Denim (Rustic Wash - 30) — ₹1,299</option>
+            <option value="Raw Indigo Heavyweight Jacket (M)|2499">Raw Indigo Heavyweight Jacket (M) — ₹2,499</option>
+            <option value="Washed Olive Boxy Cut Tee (L)|799">Washed Olive Boxy Cut Tee (L) — ₹799</option>
+          </select>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-outline uppercase">Tender Payment Type</label>
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <label class="flex items-center gap-2 border border-line-subtle p-2 cursor-pointer hover:border-rust-leather">
+              <input type="radio" name="pos-method" value="UPI" checked class="accent-rust-leather"/>
+              <span class="text-pure-white">UPI QR</span>
+            </label>
+            <label class="flex items-center gap-2 border border-line-subtle p-2 cursor-pointer hover:border-rust-leather">
+              <input type="radio" name="pos-method" value="CARD" class="accent-rust-leather"/>
+              <span class="text-pure-white">Card POS</span>
+            </label>
+            <label class="flex items-center gap-2 border border-line-subtle p-2 cursor-pointer hover:border-rust-leather">
+              <input type="radio" name="pos-method" value="CASH" class="accent-rust-leather"/>
+              <span class="text-pure-white">Cash</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-3 border-t border-line-subtle">
+          <button type="button" onclick="closePosModal()" class="px-4 py-2 text-outline hover:text-pure-white uppercase">Cancel</button>
+          <button type="submit" class="px-5 py-2.5 bg-rust-leather text-pure-white font-bold uppercase tracking-wider hover:bg-[#864431] transition-colors">
+            Print Slip & Complete Sale
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // State
+    let orders = [
+      {
+        id: '#HV-8842',
+        time: '14:31:02',
+        customerName: 'Kabir Mehta',
+        location: 'Bandra West, Mumbai',
+        manifest: 'Vintage Bootcut (Dust Blue - 32) + Drive Jacket',
+        itemSpecs: '2 ITEMS // 14.5 OZ JAPANESE DENIM',
+        channel: 'Online Store',
+        total: 8848.10,
+        status: 'Awaiting Pickup'
+      },
+      {
+        id: '#HV-8841',
+        time: '14:28:44',
+        customerName: 'Arya Sen',
+        location: 'Indiranagar, Bangalore',
+        manifest: 'Washed Olive Boxy Cut Tee (L)',
+        itemSpecs: '1 ITEM // 280 GSM COMBED COTTON',
+        channel: 'Online Store',
+        total: 1199.00,
+        status: 'Processing'
+      },
+      {
+        id: '#HV-8840',
+        time: '14:24:19',
+        customerName: 'Rohan Deshmukh',
+        location: 'Walk-in POS Flagship',
+        manifest: 'Baggy Fit Denim (Rustic Wash - 30)',
+        itemSpecs: '1 ITEM // RAW HEAVYWEIGHT 15 OZ',
+        channel: 'Chapel Rd POS',
+        total: 3199.00,
+        status: 'Flagship Collected'
+      },
+      {
+        id: '#HV-8839',
+        time: '14:15:30',
+        customerName: 'Ananya Rao',
+        location: 'Civil Lines, Delhi',
+        manifest: 'Barrel Fit Selvedge (Ecru - 28)',
+        itemSpecs: '1 ITEM // SHUTTLE LOOM WEAVE',
+        channel: 'Online Store',
+        total: 3450.00,
+        status: 'Dispatched'
+      },
+      {
+        id: '#HV-8838',
+        time: '14:02:11',
+        customerName: 'Zubin Master',
+        location: 'Koregaon Park, Pune',
+        manifest: 'Vintage Bootcut (Pitch Black - 34)',
+        itemSpecs: '1 ITEM // SULFUR OVERDYE',
+        channel: 'Online Store',
+        total: 2999.00,
+        status: 'Dispatched'
+      }
+    ];
+
+    let stockSkus = [
+      {
+        id: 'sku-1',
+        name: 'VINTAGE BOOTCUT (DUST BLUE)',
+        sku: 'DEN-VBC-DBL-08',
+        tag: 'HIGH RUNOUT',
+        sizes: [
+          { size: '28', count: 0, status: 'OUT' },
+          { size: '30', count: 0, status: 'OUT' },
+          { size: '32', count: 2, status: 'CRIT' },
+          { size: '34', count: 4, status: 'LOW' },
+          { size: '36', count: 12, status: 'OK' },
+        ]
+      },
+      {
+        id: 'sku-2',
+        name: 'BAGGY FIT (SUN-FADED BLUE)',
+        sku: 'DEN-BGY-SFB-08',
+        tag: '100% SOLD',
+        sizes: [
+          { size: '28', count: 0, status: 'OUT' },
+          { size: '30', count: 0, status: 'OUT' },
+          { size: '32', count: 0, status: 'OUT' },
+          { size: '34', count: 0, status: 'OUT' },
+          { size: '36', count: 0, status: 'OUT' },
+        ]
+      },
+      {
+        id: 'sku-3',
+        name: 'DRIVE JACKET (BURGUNDY)',
+        sku: 'JKT-DRV-BRG-08',
+        tag: '6 UNITS LEFT',
+        sizes: [
+          { size: 'S', count: 0, status: 'OUT' },
+          { size: 'M', count: 6, status: 'LOW' },
+          { size: 'L', count: 0, status: 'OUT' },
+          { size: 'XL', count: 0, status: 'OUT' },
+        ]
+      }
+    ];
+
+    let posHits = [
+      { id: 'pos-1', title: '2x Vintage Bootcut (Black 32)', terminal: 'CARD SWIPE TERMINAL 01 // 14:26 IST', amount: 5998 },
+      { id: 'pos-2', title: 'Raw Indigo Tote + Beanie', terminal: 'UPI SCAN TERMINAL 02 // 14:18 IST', amount: 1850 }
+    ];
+
+    let selectedChannel = 'all';
+    let searchQuery = '';
+
+    function showToast(msg) {
+      const toast = document.getElementById('admin-toast');
+      const text = document.getElementById('toast-text');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3500);
+    }
+
+    function renderOrders() {
+      const list = document.getElementById('orders-stream-list');
+      if (!list) return;
+
+      const filtered = orders.filter(o => {
+        if (selectedChannel === 'online' && o.channel !== 'Online Store') return false;
+        if (selectedChannel === 'pos' && o.channel !== 'Chapel Rd POS') return false;
+        if (!searchQuery.trim()) return true;
+        const q = searchQuery.toLowerCase();
+        return o.id.toLowerCase().includes(q) ||
+               o.customerName.toLowerCase().includes(q) ||
+               o.location.toLowerCase().includes(q) ||
+               o.manifest.toLowerCase().includes(q);
+      });
+
+      document.getElementById('order-count-badge').textContent = `SHOWING ${filtered.length} OF ${orders.length} ORDERS`;
+      document.getElementById('sidebar-order-count').textContent = `${orders.filter(o => o.status !== 'Delivered' && o.status !== 'Flagship Collected').length} PENDING`;
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="p-8 text-center text-outline font-label-mono-sm text-xs">
+            No matching orders found. Try adjusting filter or search query.
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = filtered.map(order => {
+        let badgeColor = 'text-amber-400 border-amber-800 bg-amber-950/30';
+        if (order.status === 'Dispatched') badgeColor = 'text-blue-400 border-blue-800 bg-blue-950/30';
+        if (order.status === 'Delivered') badgeColor = 'text-emerald-400 border-emerald-800 bg-emerald-950/30';
+        if (order.status === 'Flagship Collected') badgeColor = 'text-purple-400 border-purple-800 bg-purple-950/30';
+
+        return `
+          <div class="grid grid-cols-12 px-4 py-3.5 items-center hover:bg-surface-container-high/60 transition-colors">
+            <div class="col-span-2 space-y-0.5">
+              <span class="font-label-mono-lg text-xs font-bold text-pure-white">${order.id}</span>
+              <p class="font-label-mono-sm text-[10px] text-outline">${order.time} IST</p>
+            </div>
+
+            <div class="col-span-3 space-y-0.5">
+              <p class="font-body-md text-xs font-medium text-pure-white">${order.customerName}</p>
+              <div class="flex items-center gap-1 text-[10px] text-outline font-label-mono-sm">
+                <span class="material-symbols-outlined text-[11px]">location_on</span>
+                <span>${order.location}</span>
+              </div>
+            </div>
+
+            <div class="col-span-4 space-y-0.5">
+              <p class="font-body-sm text-xs text-on-surface line-clamp-1">${order.manifest}</p>
+              <div class="flex items-center gap-2 text-[10px] font-label-mono-sm">
+                <span class="text-outline-variant">${order.itemSpecs}</span>
+                <span class="px-1 py-0.2 bg-surface-container text-secondary text-[9px] border border-line-subtle">${order.channel}</span>
+              </div>
+            </div>
+
+            <div class="col-span-3 flex items-center justify-end gap-2">
+              <div class="text-right">
+                <p class="font-label-mono-lg text-xs font-bold text-pure-white">₹${order.total.toLocaleString('en-IN', {minimumFractionDigits: 2})}</p>
+                <button
+                  onclick="cycleOrderStatus('${order.id}')"
+                  title="Click to advance status"
+                  class="mt-1 inline-flex items-center gap-1 border px-2 py-0.5 text-[10px] font-label-mono-sm uppercase tracking-wider font-semibold cursor-pointer hover:scale-105 transition-all ${badgeColor}">
+                  <span>${order.status}</span>
+                  <span class="material-symbols-outlined text-[10px]">sync</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderStockMatrix() {
+      const container = document.getElementById('inventory-matrix-list');
+      if (!container) return;
+
+      container.innerHTML = stockSkus.map(sku => {
+        const sizesHtml = sku.sizes.map(s => {
+          let color = 'bg-surface-container text-outline';
+          if (s.status === 'OK') color = 'bg-emerald-950/40 text-emerald-400 border border-emerald-800';
+          if (s.status === 'LOW') color = 'bg-amber-950/40 text-amber-400 border border-amber-800';
+          if (s.status === 'CRIT') color = 'bg-rose-950/40 text-rose-400 border border-rose-800';
+          if (s.status === 'OUT') color = 'bg-surface-dark text-outline-variant line-through border border-line-subtle';
+
+          return `
+            <div class="flex-1 flex flex-col items-center p-1.5 ${color}">
+              <span class="text-[9px] font-bold">${s.size}</span>
+              <span class="text-[11px] font-bold">${s.count}</span>
+            </div>
+          `;
+        }).join('');
+
+        return `
+          <div class="p-3 bg-surface-container-lowest border border-line-subtle space-y-2">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-headline-sm text-xs font-bold text-pure-white">${sku.name}</p>
+                <p class="font-label-mono-sm text-[10px] text-outline">${sku.sku}</p>
+              </div>
+              <button onclick="restockSku('${sku.id}')" class="px-2 py-1 bg-surface-container-high hover:bg-surface-bright text-[10px] font-label-mono-sm uppercase text-secondary border border-line-subtle transition-colors">
+                +10 Units
+              </button>
+            </div>
+            <div class="flex gap-1">
+              ${sizesHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderPosHits() {
+      const container = document.getElementById('pos-hits-list');
+      if (!container) return;
+
+      container.innerHTML = posHits.map(hit => `
+        <div class="p-2.5 bg-surface-container-lowest border border-line-subtle flex items-center justify-between">
+          <div class="space-y-0.5">
+            <p class="font-body-md text-xs text-pure-white">${hit.title}</p>
+            <p class="font-label-mono-sm text-[10px] text-outline">${hit.terminal}</p>
+          </div>
+          <span class="font-label-mono-lg text-xs font-bold text-secondary">₹${hit.amount.toLocaleString('en-IN')}</span>
+        </div>
+      `).join('');
+    }
+
+    function cycleOrderStatus(orderId) {
+      const statuses = ['Processing', 'Awaiting Pickup', 'Dispatched', 'Delivered', 'Flagship Collected'];
+      orders = orders.map(o => {
+        if (o.id === orderId) {
+          const idx = (statuses.indexOf(o.status) + 1) % statuses.length;
+          const next = statuses[idx];
+          showToast(`Order ${o.id} progressed to ${next}`);
+          return { ...o, status: next };
+        }
+        return o;
+      });
+      renderOrders();
+    }
+
+    function restockSku(skuId) {
+      stockSkus = stockSkus.map(item => {
+        if (item.id === skuId) {
+          const updated = item.sizes.map(s => {
+            const newCount = s.count + 5;
+            return {
+              ...s,
+              count: newCount,
+              status: newCount > 10 ? 'OK' : newCount > 3 ? 'LOW' : 'CRIT'
+            };
+          });
+          return { ...item, sizes: updated };
+        }
+        return item;
+      });
+      renderStockMatrix();
+      showToast(`Added +10 units to SKU batch allocation`);
+    }
+
+    function setChannel(chan) {
+      selectedChannel = chan;
+      ['all', 'online', 'pos'].forEach(c => {
+        const btn = document.getElementById(`btn-chan-${c}`);
+        if (btn) {
+          if (c === chan) {
+            btn.className = 'px-2.5 py-1 text-[11px] font-label-mono-sm bg-primary text-pitch-black font-semibold uppercase';
+          } else {
+            btn.className = 'px-2.5 py-1 text-[11px] font-label-mono-sm text-outline hover:text-pure-white uppercase';
+          }
+        }
+      });
+      renderOrders();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val;
+      renderOrders();
+    }
+
+    function setTab(tab) {
+      ['overview', 'orders', 'inventory', 'flagship', 'analytics'].forEach(t => {
+        const el = document.getElementById(`nav-${t}`);
+        if (el) {
+          if (t === tab) {
+            el.className = 'w-full flex items-center justify-between px-3 py-2.5 bg-surface-container text-pure-white border-l-2 border-rust-leather text-xs font-label-mono-sm uppercase tracking-wider transition-all';
+          } else {
+            el.className = 'w-full flex items-center justify-between px-3 py-2.5 text-outline hover:text-pure-white hover:bg-surface-container-high text-xs font-label-mono-sm uppercase tracking-wider transition-all';
+          }
+        }
+      });
+      showToast(`Navigated to ${tab.toUpperCase()} Matrix`);
+    }
+
+    function openNewDropModal() {
+      document.getElementById('modal-new-drop').classList.remove('hidden');
+      document.getElementById('modal-new-drop').classList.add('flex');
+    }
+
+    function closeNewDropModal() {
+      document.getElementById('modal-new-drop').classList.add('hidden');
+      document.getElementById('modal-new-drop').classList.remove('flex');
+    }
+
+    function handleDeploySku(e) {
+      e.preventDefault();
+      const name = document.getElementById('drop-name').value;
+      const price = document.getElementById('drop-price').value;
+      const stock = parseInt(document.getElementById('drop-stock').value) || 20;
+
+      const newSku = {
+        id: 'sku-' + (stockSkus.length + 1),
+        name: name.toUpperCase(),
+        sku: 'DROP-09-' + Math.floor(100 + Math.random() * 900),
+        tag: 'NEW RELEASE',
+        sizes: [
+          { size: '28', count: Math.floor(stock / 5), status: 'OK' },
+          { size: '30', count: Math.floor(stock / 5), status: 'OK' },
+          { size: '32', count: Math.floor(stock / 5), status: 'OK' },
+          { size: '34', count: Math.floor(stock / 5), status: 'OK' },
+          { size: '36', count: Math.floor(stock / 5), status: 'OK' }
+        ]
+      };
+
+      stockSkus.unshift(newSku);
+      renderStockMatrix();
+      closeNewDropModal();
+      showToast(`Deployed ${name} (₹${price}) to Catalog Matrix!`);
+    }
+
+    function openPosModal() {
+      document.getElementById('modal-pos').classList.remove('hidden');
+      document.getElementById('modal-pos').classList.add('flex');
+    }
+
+    function closePosModal() {
+      document.getElementById('modal-pos').classList.add('hidden');
+      document.getElementById('modal-pos').classList.remove('flex');
+    }
+
+    function handlePosCheckout(e) {
+      e.preventDefault();
+      const customer = document.getElementById('pos-customer').value || 'Flagship Walk-in';
+      const [itemManifest, itemPrice] = document.getElementById('pos-item').value.split('|');
+      const method = document.querySelector('input[name="pos-method"]:checked').value;
+      const priceNum = parseFloat(itemPrice);
+
+      const orderId = '#HV-' + Math.floor(8850 + Math.random() * 100);
+      const timeStr = new Date().toLocaleTimeString('en-US', { hour12: false });
+
+      // Add to orders
+      orders.unshift({
+        id: orderId,
+        time: timeStr,
+        customerName: customer,
+        location: 'Walk-in POS Flagship',
+        manifest: itemManifest,
+        itemSpecs: 'FLAGSHIP IN-STORE SALE // TENDER ' + method,
+        channel: 'Chapel Rd POS',
+        total: priceNum,
+        status: 'Flagship Collected'
+      });
+
+      // Add to POS Hits
+      posHits.unshift({
+        id: 'pos-' + Date.now(),
+        title: itemManifest,
+        terminal: `${method} TERMINAL 01 // ${timeStr} IST`,
+        amount: priceNum
+      });
+
+      renderOrders();
+      renderPosHits();
+      closePosModal();
+      showToast(`Sale recorded! Order ${orderId} synced to register.`);
+    }
+
+    function exportCsvManifest() {
+      const headers = ['Order ID', 'Customer', 'Location', 'Manifest', 'Channel', 'Total', 'Status'];
+      const rows = orders.map(o => [
+        o.id,
+        `"${o.customerName}"`,
+        `"${o.location}"`,
+        `"${o.manifest}"`,
+        `"${o.channel}"`,
+        o.total,
+        `"${o.status}"`
+      ]);
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `HIVE_Manifest_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Fulfillment manifest CSV downloaded');
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderOrders();
+      renderStockMatrix();
+      renderPosHits();
+    });
+  </script>
+</body>
+</html>

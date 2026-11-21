@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 
 export default function Header() {
@@ -135,6 +136,15 @@ export default function Header() {
                   >
                     Contact Concierge
                   </a>
+                  <div className="border-t border-surface-container my-1"></div>
+                  <Link
+                    href="/admin"
+                    onClick={() => setShowAccountMenu(false)}
+                    className="flex items-center justify-between py-1 text-secondary hover:text-pure-white transition-colors font-bold"
+                  >
+                    <span>HQ Command Center</span>
+                    <span className="text-[9px] bg-rust-leather text-pure-white px-1.5 py-0.5">ADMIN</span>
+                  </Link>
                 </div>
               </div>
             )}

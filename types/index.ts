@@ -76,3 +76,34 @@ export interface OrderDetails {
   total: number;
   date: string;
 }
+
+export interface AdminOrder {
+  id: string;
+  time: string;
+  customerName: string;
+  location: string;
+  manifest: string;
+  itemSpecs: string;
+  channel: 'Online Store' | 'Chapel Rd POS';
+  total: number;
+  status: 'Awaiting Pickup' | 'Processing' | 'Flagship Collected' | 'Dispatched' | 'Delivered';
+}
+
+export interface StockSKU {
+  id: string;
+  name: string;
+  sku: string;
+  tag: string;
+  sizes: {
+    size: string;
+    count: number;
+    status: 'OUT' | 'CRIT' | 'LOW' | 'OK';
+  }[];
+}
+
+export interface PosHit {
+  id: string;
+  title: string;
+  terminal: string;
+  amount: number;
+}

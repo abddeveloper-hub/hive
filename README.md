@@ -43,6 +43,18 @@ An industrial, brutalist dark-aesthetic e-commerce storefront for **HIVE**, engi
 * 29, Chapel Rd, Ranwar Village, Bandra West, Mumbai 400 050.
 * Store hours (11AM - 9:30PM), direct Google Maps navigation link, and one-tap call hotline.
 
+### 9. 🎛️ HIVE HQ Operations Command Center & Admin Matrix (`/admin` & `admin.html`)
+* **Real-time Order Stream**: Live fulfillment status progression (`Processing` ➔ `Awaiting Pickup` ➔ `Dispatched` ➔ `Delivered`).
+* **Multi-Channel Dispatch Filter**: Segment orders by `Online Store` vs `Chapel Rd POS`.
+* **Stock Depletion Matrix**: Real-time size-by-size inventory telemetry with one-tap restock injection.
+* **Flagship POS Register**: Live walk-in terminal with instant order injection (UPI, Card, Cash).
+* **Export CSV Manifest**: One-click download of logistics fulfillment dispatch lists.
+* **RESTful Backend Endpoints**:
+  * `GET / POST / PATCH /api/orders`
+  * `GET / POST /api/inventory`
+  * `GET / POST /api/products`
+  * `GET /api/analytics`
+
 ---
 
 ## 🛠 Tech Stack
