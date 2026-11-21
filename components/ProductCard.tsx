@@ -9,7 +9,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { addToCart } = useCart();
+  const { addToCart, toggleWishlist, isInWishlist, setQuickViewProduct } = useCart();
+  const isWish = isInWishlist(product.id);
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -27,20 +28,26 @@ export default function ProductCard({ product }: ProductCardProps) {
     });
   };
 
+  const handleWishlistClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleWishlist(product);
+  };
+
   return (
     <div
-      className={`denim-card flex flex-col bg-surface-container-low group cursor-pointer transition-transform duration-200 ${
+      className={`denim-card flex flex-col bg-surface-container-low group cursor-pointer transition-transform duration-200 relative ${
         product.isSoldOut ? 'opacity-85' : ''
       }`}
+      onClick={() => setQuickViewProduct(product)}
     >
       <div className="relative w-full aspect-[3/4] overflow-hidden bg-surface-container">
         <img
+          alt={product.alt || product.name}
           className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 ${
             product.isSoldOut ? 'grayscale-[30%]' : ''
           }`}
-          src={product.image}
-          alt={product.alt || product.name}
           loading="lazy"
+          src={product.image}
         />
 
         {product.isSoldOut && (
@@ -51,6 +58,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
 
+        {/* Badges */}
         <div className="absolute top-2 left-2 flex flex-col gap-1 items-start">
           {product.discountBadge && (
             <span className="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-1.5 py-0.5">
@@ -63,6 +71,22 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           )}
         </div>
+
+        {/* Wishlist Heart Button */}
+        <button
+          aria-label="Wishlist toggle"
+          className={`absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center transition-all ${
+            isWish
+              ? 'bg-secondary text-pitch-black shadow-md'
+              : 'bg-pitch-black/60 text-pure-white/80 hover:text-secondary'
+          }`}
+          onClick={handleWishlistClick}
+          type="button"
+        >
+          <span className="material-symbols-outlined text-[15px]">
+            {isWish ? 'favorite' : 'favorite_border'}
+          </span>
+        </button>
       </div>
 
       <div className="p-2.5 flex flex-col justify-between flex-grow space-y-1.5">

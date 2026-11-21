@@ -1,12 +1,18 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { CartItem } from '@/types';
+import { CartItem, Product, Review, PromoCode, OrderDetails } from '@/types';
+import { PROMO_CODES, REVIEWS as INITIAL_REVIEWS } from '@/data/products';
 
 interface CartContextType {
   cart: CartItem[];
   cartCount: number;
+  cartSubtotal: number;
+  cartDiscount: number;
   cartTotal: number;
+  appliedPromo: PromoCode | null;
+  applyPromo: (code: string) => { success: boolean; message: string };
+  removePromo: () => void;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
   addToCart: (item: Omit<CartItem, 'id'>) => void;
@@ -15,13 +21,43 @@ interface CartContextType {
   clearCart: () => void;
   lastToast: string | null;
   setLastToast: (msg: string | null) => void;
+
+  // Wishlist
+  wishlist: Product[];
+  wishlistCount: number;
+  isWishlistOpen: boolean;
+  setIsWishlistOpen: (open: boolean) => void;
+  toggleWishlist: (product: Product) => void;
+  isInWishlist: (productId: string) => boolean;
+
+  // Modals
+  isSearchOpen: boolean;
+  setIsSearchOpen: (open: boolean) => void;
+  isSizeGuideOpen: boolean;
+  setIsSizeGuideOpen: (open: boolean) => void;
+  isCheckoutOpen: boolean;
+  setIsCheckoutOpen: (open: boolean) => void;
+  isReviewModalOpen: boolean;
+  setIsReviewModalOpen: (open: boolean) => void;
+
+  // Quick View
+  quickViewProduct: Product | null;
+  setQuickViewProduct: (product: Product | null) => void;
+
+  // Reviews
+  reviews: Review[];
+  addReview: (review: Omit<Review, 'id'>) => void;
+
+  // Orders
+  lastOrder: OrderDetails | null;
+  setLastOrder: (order: OrderDetails | null) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Cart state
   const [cart, setCart] = useState<CartItem[]>(() => {
-    // Initial sample items to preserve the original 02 count aesthetic, or restore from localStorage
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('hive_cart');
       if (saved) {
@@ -56,7 +92,40 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     ];
   });
 
+  // Wishlist state
+  const [wishlist, setWishlist] = useState<Product[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('hive_wishlist');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    }
+    return [];
+  });
+
+  // Modals & UI States
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+
+  // Reviews state
+  const [reviews, setReviews] = useState<Review[]>(INITIAL_REVIEWS);
+
+  // Promo code state
+  const [appliedPromo, setAppliedPromo] = useState<PromoCode | null>(null);
+
+  // Orders state
+  const [lastOrder, setLastOrder] = useState<OrderDetails | null>(null);
+
+  // Micro-toast state
   const [lastToast, setLastToast] = useState<string | null>(null);
 
   useEffect(() => {
@@ -66,6 +135,21 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error(e);
     }
   }, [cart]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('hive_wishlist', JSON.stringify(wishlist));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [wishlist]);
+
+  const showToast = (msg: string) => {
+    setLastToast(msg);
+    setTimeout(() => {
+      setLastToast((curr) => (curr === msg ? null : curr));
+    }, 3200);
+  };
 
   const addToCart = (newItem: Omit<CartItem, 'id'>) => {
     setCart((prev) => {
@@ -79,12 +163,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       return [...prev, { ...newItem, id: `${newItem.productId}-${newItem.size}-${Date.now()}` }];
     });
-
-    const toastMsg = `✓ ${newItem.name} (${newItem.size}) added to your bag`;
-    setLastToast(toastMsg);
-    setTimeout(() => {
-      setLastToast((current) => (current === toastMsg ? null : current));
-    }, 3200);
+    showToast(`✓ ${newItem.name} (${newItem.size}) added to your bag`);
   };
 
   const removeFromCart = (id: string) => {
@@ -105,17 +184,84 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   };
 
-  const clearCart = () => setCart([]);
+  const clearCart = () => {
+    setCart([]);
+    setAppliedPromo(null);
+  };
 
+  // Wishlist actions
+  const toggleWishlist = (product: Product) => {
+    setWishlist((prev) => {
+      const exists = prev.some((p) => p.id === product.id);
+      if (exists) {
+        showToast(`Removed ${product.name} from wishlist`);
+        return prev.filter((p) => p.id !== product.id);
+      } else {
+        showToast(`✓ Saved ${product.name} to wishlist`);
+        return [...prev, product];
+      }
+    });
+  };
+
+  const isInWishlist = (productId: string) => {
+    return wishlist.some((p) => p.id === productId);
+  };
+
+  // Promo code actions
+  const applyPromo = (code: string) => {
+    const cleanCode = code.trim().toUpperCase();
+    const found = PROMO_CODES.find((p) => p.code === cleanCode);
+
+    if (!found) {
+      return { success: false, message: 'Invalid promo code' };
+    }
+
+    if (found.minSpend && cartSubtotal < found.minSpend) {
+      return {
+        success: false,
+        message: `Min. spend of ₹${found.minSpend.toLocaleString('en-IN')} required for ${found.code}`,
+      };
+    }
+
+    setAppliedPromo(found);
+    return { success: true, message: `Applied ${found.code} (${found.discountPercent}% OFF)` };
+  };
+
+  const removePromo = () => {
+    setAppliedPromo(null);
+  };
+
+  // Review action
+  const addReview = (review: Omit<Review, 'id'>) => {
+    const newRev: Review = {
+      ...review,
+      id: `rev-${Date.now()}`,
+      date: 'Just now',
+    };
+    setReviews((prev) => [newRev, ...prev]);
+    showToast('✓ Thank you! Your review has been published.');
+  };
+
+  // Calculations
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-  const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const cartSubtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const cartDiscount = appliedPromo
+    ? Math.round((cartSubtotal * appliedPromo.discountPercent) / 100)
+    : 0;
+  const cartTotal = Math.max(0, cartSubtotal - cartDiscount);
+  const wishlistCount = wishlist.length;
 
   return (
     <CartContext.Provider
       value={{
         cart,
         cartCount,
+        cartSubtotal,
+        cartDiscount,
         cartTotal,
+        appliedPromo,
+        applyPromo,
+        removePromo,
         isCartOpen,
         setIsCartOpen,
         addToCart,
@@ -124,6 +270,31 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         clearCart,
         lastToast,
         setLastToast,
+
+        wishlist,
+        wishlistCount,
+        isWishlistOpen,
+        setIsWishlistOpen,
+        toggleWishlist,
+        isInWishlist,
+
+        isSearchOpen,
+        setIsSearchOpen,
+        isSizeGuideOpen,
+        setIsSizeGuideOpen,
+        isCheckoutOpen,
+        setIsCheckoutOpen,
+        isReviewModalOpen,
+        setIsReviewModalOpen,
+
+        quickViewProduct,
+        setQuickViewProduct,
+
+        reviews,
+        addReview,
+
+        lastOrder,
+        setLastOrder,
       }}
     >
       {children}

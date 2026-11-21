@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 
 export default function CartDrawer() {
@@ -11,9 +11,18 @@ export default function CartDrawer() {
     updateQuantity,
     removeFromCart,
     cartTotal,
+    cartSubtotal,
+    cartDiscount,
     cartCount,
+    appliedPromo,
+    applyPromo,
+    removePromo,
+    setIsCheckoutOpen,
     clearCart,
   } = useCart();
+
+  const [promoInput, setPromoInput] = useState('');
+  const [promoMessage, setPromoMessage] = useState<{ error?: string; success?: string } | null>(null);
 
   if (!isCartOpen) return null;
 
@@ -21,14 +30,37 @@ export default function CartDrawer() {
   const isFreeShipping = cartTotal >= freeShippingThreshold;
   const amountNeeded = freeShippingThreshold - cartTotal;
 
-  const handleCheckout = () => {
-    // Generate a WhatsApp checkout link or order summary
+  const handleApplyPromo = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!promoInput.trim()) return;
+
+    const res = applyPromo(promoInput);
+    if (res.success) {
+      setPromoMessage({ success: res.message });
+      setPromoInput('');
+    } else {
+      setPromoMessage({ error: res.message });
+    }
+
+    setTimeout(() => {
+      setPromoMessage(null);
+    }, 4000);
+  };
+
+  const handleOpenCheckout = () => {
+    setIsCartOpen(false);
+    setIsCheckoutOpen(true);
+  };
+
+  const handleWhatsAppCheckout = () => {
     const orderLines = cart.map(
       (item) => `• ${item.name} (Size: ${item.size}) x${item.quantity} - ₹${item.price * item.quantity}`
     );
     const orderText = `Hi HIVE team! I'd like to place an order from the website:\n\n${orderLines.join(
       '\n'
-    )}\n\n*Total: ₹${cartTotal.toLocaleString('en-IN')}*\nShipping: ${
+    )}\n\nSubtotal: ₹${cartSubtotal.toLocaleString('en-IN')}${
+      cartDiscount > 0 ? `\nDiscount (${appliedPromo?.code}): -₹${cartDiscount.toLocaleString('en-IN')}` : ''
+    }\n*Total Payable: ₹${cartTotal.toLocaleString('en-IN')}*\nShipping: ${
       isFreeShipping ? 'FREE' : '₹99'
     }`;
     const encoded = encodeURIComponent(orderText);
@@ -110,9 +142,9 @@ export default function CartDrawer() {
               >
                 <div className="w-16 h-20 bg-surface-container flex-shrink-0 overflow-hidden">
                   <img
+                    alt={item.name}
                     className="w-full h-full object-cover"
                     src={item.image}
-                    alt={item.name}
                   />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
@@ -143,7 +175,7 @@ export default function CartDrawer() {
                   </div>
 
                   <div className="flex items-center justify-between pt-2">
-                    {/* Qty Changer */}
+                    {/* Qty Modifier */}
                     <div className="flex items-center bg-surface-container-high px-2 py-0.5 justify-between w-20">
                       <button
                         className="text-on-surface hover:text-pure-white"
@@ -176,16 +208,66 @@ export default function CartDrawer() {
           )}
         </div>
 
-        {/* Footer / Summary */}
+        {/* Promo Code Input & Summary */}
         {cart.length > 0 && (
           <div className="p-4 bg-surface-container-low border-t border-surface-container space-y-3">
-            <div className="space-y-1.5 font-label-mono-sm text-xs uppercase">
+            {/* Promo code form */}
+            <form className="space-y-1.5" onSubmit={handleApplyPromo}>
+              <div className="flex gap-2">
+                <input
+                  className="flex-1 bg-surface-container border border-surface-container-high px-3 py-2 text-pure-white font-label-mono-sm text-xs uppercase outline-none focus:border-primary placeholder:text-outline"
+                  onChange={(e) => setPromoInput(e.target.value)}
+                  placeholder="Promo Code (HIVE10, DROP20)"
+                  type="text"
+                  value={promoInput}
+                />
+                <button
+                  className="px-4 py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-mono-sm text-xs uppercase font-semibold transition-colors"
+                  type="submit"
+                >
+                  Apply
+                </button>
+              </div>
+
+              {appliedPromo && (
+                <div className="flex items-center justify-between text-[11px] font-label-mono-sm text-secondary">
+                  <span>✓ {appliedPromo.code} active ({appliedPromo.discountPercent}% OFF)</span>
+                  <button
+                    className="underline hover:text-error"
+                    onClick={removePromo}
+                    type="button"
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+
+              {promoMessage?.success && (
+                <p className="text-[11px] font-label-mono-sm text-emerald-400">
+                  {promoMessage.success}
+                </p>
+              )}
+              {promoMessage?.error && (
+                <p className="text-[11px] font-label-mono-sm text-error">
+                  {promoMessage.error}
+                </p>
+              )}
+            </form>
+
+            {/* Calculations breakdown */}
+            <div className="space-y-1.5 font-label-mono-sm text-xs uppercase pt-1">
               <div className="flex justify-between text-outline">
                 <span>Subtotal</span>
                 <span className="text-on-surface font-semibold">
-                  ₹{cartTotal.toLocaleString('en-IN')}
+                  ₹{cartSubtotal.toLocaleString('en-IN')}
                 </span>
               </div>
+              {cartDiscount > 0 && (
+                <div className="flex justify-between text-secondary">
+                  <span>Discount ({appliedPromo?.code})</span>
+                  <span>-₹{cartDiscount.toLocaleString('en-IN')}</span>
+                </div>
+              )}
               <div className="flex justify-between text-outline">
                 <span>Pan-India Delivery</span>
                 <span className={isFreeShipping ? 'text-emerald-400 font-bold' : 'text-on-surface font-semibold'}>
@@ -200,18 +282,28 @@ export default function CartDrawer() {
               </div>
             </div>
 
+            {/* Actions */}
             <div className="space-y-2 pt-1">
               <button
                 className="w-full py-3.5 bg-primary hover:bg-pure-white text-pitch-black font-headline-sm text-headline-sm uppercase font-bold tracking-wider flex items-center justify-center gap-2 active:scale-[0.98] transition-all"
-                onClick={handleCheckout}
+                onClick={handleOpenCheckout}
                 type="button"
               >
-                <span className="material-symbols-outlined text-[20px]">chat</span>
+                <span className="material-symbols-outlined text-[20px]">lock</span>
+                <span>SECURE CHECKOUT</span>
+              </button>
+
+              <button
+                className="w-full py-2.5 bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
+                onClick={handleWhatsAppCheckout}
+                type="button"
+              >
+                <span className="material-symbols-outlined text-[18px]">chat</span>
                 <span>ORDER VIA WHATSAPP (INSTANT)</span>
               </button>
 
               <button
-                className="w-full py-2 text-center font-label-mono-sm text-[11px] text-outline uppercase hover:text-on-surface transition-colors"
+                className="w-full py-1 text-center font-label-mono-sm text-[10px] text-outline uppercase hover:text-on-surface transition-colors"
                 onClick={clearCart}
                 type="button"
               >

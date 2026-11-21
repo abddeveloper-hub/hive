@@ -4,6 +4,12 @@ import './globals.css';
 import { CartProvider } from '@/context/CartContext';
 import Header from '@/components/Header';
 import CartDrawer from '@/components/CartDrawer';
+import WishlistDrawer from '@/components/WishlistDrawer';
+import SearchModal from '@/components/SearchModal';
+import SizeGuideModal from '@/components/SizeGuideModal';
+import ProductQuickView from '@/components/ProductQuickView';
+import CheckoutModal from '@/components/CheckoutModal';
+import ReviewModal from '@/components/ReviewModal';
 import BottomNav from '@/components/BottomNav';
 
 const spaceGrotesk = Space_Grotesk({
@@ -48,7 +54,14 @@ export default function RootLayout({
           <main className="flex flex-col relative w-full pt-20 pb-24 bg-surface min-h-screen">
             {children}
           </main>
+          {/* Global Interactive Drawers & Modals */}
           <CartDrawer />
+          <WishlistDrawer />
+          <SearchModal />
+          <SizeGuideModal />
+          <ProductQuickView />
+          <CheckoutModal />
+          <ReviewModal />
           <BottomNav />
         </CartProvider>
       </body>

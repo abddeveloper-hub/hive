@@ -1,15 +1,17 @@
 'use client';
 
 import React from 'react';
-import { REVIEWS } from '@/data/products';
+import { useCart } from '@/context/CartContext';
 
 export default function CustomerReviews() {
+  const { reviews, setIsReviewModalOpen } = useCart();
+
   return (
     <section className="w-full pt-10 px-4 flex flex-col space-y-4">
       <div className="flex flex-col space-y-1">
         <div className="flex items-center justify-between">
           <span className="font-label-mono-sm text-label-mono-sm uppercase text-outline tracking-widest">
-            VERIFIED WORDS
+            VERIFIED WORDS ({reviews.length})
           </span>
           <div className="flex text-rust-leather text-xs tracking-tight">
             ★★★★★
@@ -23,26 +25,40 @@ export default function CustomerReviews() {
 
       {/* Review Cards (Horizontal Carousel) */}
       <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory">
-        {REVIEWS.map((rev) => (
+        {reviews.map((rev) => (
           <div
             key={rev.id}
-            className="min-w-[260px] max-w-[280px] bg-surface-container-low p-4 flex flex-col justify-between space-y-3 snap-start"
+            className="min-w-[260px] max-w-[280px] bg-surface-container-low p-4 flex flex-col justify-between space-y-3 snap-start border border-surface-container"
           >
             <div className="space-y-2">
-              <div className="flex text-secondary text-sm">
-                {'★'.repeat(rev.rating)}
+              <div className="flex items-center justify-between">
+                <div className="flex text-secondary text-sm">
+                  {'★'.repeat(rev.rating)}
+                </div>
+                {rev.date && (
+                  <span className="font-label-mono-sm text-[10px] text-outline">
+                    {rev.date}
+                  </span>
+                )}
               </div>
               <p className="font-body-md text-body-md text-on-surface italic leading-relaxed">
                 {rev.content}
               </p>
             </div>
-            <div className="pt-2 flex items-center justify-between">
-              <span className="font-label-mono-sm text-label-mono-sm uppercase font-bold text-primary">
-                {rev.author}
-              </span>
-              <span className="font-label-mono-sm text-[10px] text-outline uppercase">
-                Verified Buyer
-              </span>
+            <div className="pt-2 border-t border-surface-container flex flex-col space-y-0.5">
+              <div className="flex items-center justify-between">
+                <span className="font-label-mono-sm text-label-mono-sm uppercase font-bold text-primary">
+                  {rev.author}
+                </span>
+                <span className="font-label-mono-sm text-[10px] text-emerald-400 uppercase">
+                  Verified Buyer
+                </span>
+              </div>
+              {rev.fitFeedback && (
+                <span className="font-label-mono-sm text-[10px] text-outline">
+                  {rev.fitFeedback}
+                </span>
+              )}
             </div>
           </div>
         ))}
@@ -51,9 +67,9 @@ export default function CustomerReviews() {
       {/* Review Action */}
       <div className="pt-2 flex flex-col space-y-2">
         <button
-          className="w-full py-3 bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider text-center flex items-center justify-center gap-2 transition-colors"
+          className="w-full py-3 bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm uppercase tracking-wider text-center flex items-center justify-center gap-2 transition-colors cursor-pointer"
+          onClick={() => setIsReviewModalOpen(true)}
           type="button"
-          onClick={() => alert('Review submission modal opening...')}
         >
           <span className="material-symbols-outlined text-[18px]">rate_review</span>
           <span>WRITE A REVIEW</span>

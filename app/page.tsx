@@ -8,6 +8,7 @@ import SpotlightDrop from '@/components/SpotlightDrop';
 import TopwearCatalog from '@/components/TopwearCatalog';
 import CuratedLook from '@/components/CuratedLook';
 import FlagshipStore from '@/components/FlagshipStore';
+import CommunityLookbook from '@/components/CommunityLookbook';
 import CustomerReviews from '@/components/CustomerReviews';
 import Footer from '@/components/Footer';
 
@@ -35,10 +36,13 @@ export default function Home() {
       {/* 6. OFFLINE FLAGSHIP STORE EXPERIENCE */}
       <FlagshipStore />
 
-      {/* 7. CUSTOMER VOICES & REVIEWS */}
+      {/* 7. COMMUNITY UGC LOOKBOOK ARCHIVE */}
+      <CommunityLookbook />
+
+      {/* 8. CUSTOMER VOICES & REVIEWS */}
       <CustomerReviews />
 
-      {/* 8. REFINED FOOTER ATTRIBUTION & ASSURANCES */}
+      {/* 9. REFINED FOOTER ATTRIBUTION & ASSURANCES */}
       <Footer />
     </div>
   );

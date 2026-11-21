@@ -5,9 +5,19 @@ import { SPOTLIGHT_PRODUCT } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 
 export default function SpotlightDrop() {
-  const { addToCart, lastToast } = useCart();
-  const [selectedSize, setSelectedSize] = useState<string>(SPOTLIGHT_PRODUCT.defaultSize);
+  const {
+    addToCart,
+    lastToast,
+    toggleWishlist,
+    isInWishlist,
+    setIsSizeGuideOpen,
+  } = useCart();
+
+  const [selectedSize, setSelectedSize] = useState<string>(
+    SPOTLIGHT_PRODUCT.sizes[2] || '32'
+  );
   const [quantity, setQuantity] = useState<number>(1);
+  const isWish = isInWishlist(SPOTLIGHT_PRODUCT.id);
 
   const handleAdd = () => {
     addToCart({
@@ -41,13 +51,13 @@ export default function SpotlightDrop() {
         {/* Main product interactive showcase */}
         <div className="w-full aspect-[4/3] overflow-hidden bg-surface-container relative">
           <img
-            className="w-full h-full object-cover"
-            src={SPOTLIGHT_PRODUCT.image}
             alt={SPOTLIGHT_PRODUCT.alt}
+            className="w-full h-full object-cover"
             id="spotlight-img"
+            src={SPOTLIGHT_PRODUCT.image}
           />
           <div className="absolute bottom-3 left-3 bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-2 py-1">
-            {SPOTLIGHT_PRODUCT.discountTag}
+            {SPOTLIGHT_PRODUCT.discountBadge}
           </div>
         </div>
 
@@ -64,11 +74,17 @@ export default function SpotlightDrop() {
             </div>
             <button
               aria-label="Favorite item"
-              className="w-9 h-9 bg-surface-container-high rounded-full flex items-center justify-center text-on-surface hover:text-secondary transition-colors"
+              className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
+                isWish
+                  ? 'bg-secondary text-pitch-black'
+                  : 'bg-surface-container-high text-on-surface hover:text-secondary'
+              }`}
+              onClick={() => toggleWishlist(SPOTLIGHT_PRODUCT)}
               type="button"
-              onClick={() => alert('Saved to favorites')}
             >
-              <span className="material-symbols-outlined text-[20px]">favorite</span>
+              <span className="material-symbols-outlined text-[20px]">
+                {isWish ? 'favorite' : 'favorite_border'}
+              </span>
             </button>
           </div>
 
@@ -93,8 +109,8 @@ export default function SpotlightDrop() {
             </span>
             <button
               className="font-label-mono-sm text-[11px] text-outline underline uppercase hover:text-on-surface"
+              onClick={() => setIsSizeGuideOpen(true)}
               type="button"
-              onClick={() => alert('Standard Men\'s waist sizing. Choose true to size for classic fit or +1 for extra stack.')}
             >
               Size Guide
             </button>
