@@ -55,6 +55,47 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+const isCartItem = (item: unknown): item is CartItem => {
+  if (!item || typeof item !== 'object') return false;
+  const value = item as Record<string, unknown>;
+
+  return (
+    typeof value.id === 'string' &&
+    typeof value.productId === 'string' &&
+    typeof value.name === 'string' &&
+    typeof value.size === 'string' &&
+    typeof value.image === 'string' &&
+    typeof value.price === 'number' &&
+    Number.isFinite(value.price) &&
+    typeof value.quantity === 'number' &&
+    Number.isFinite(value.quantity) &&
+    value.quantity > 0 &&
+    (value.originalPrice === undefined ||
+      (typeof value.originalPrice === 'number' && Number.isFinite(value.originalPrice)))
+  );
+};
+
+const isProduct = (product: unknown): product is Product => {
+  if (!product || typeof product !== 'object') return false;
+  const value = product as Record<string, unknown>;
+  const categories = ['denim', 'shirts', 'tshirts', 'jackets'];
+
+  return (
+    typeof value.id === 'string' &&
+    typeof value.name === 'string' &&
+    typeof value.category === 'string' &&
+    categories.includes(value.category) &&
+    typeof value.price === 'number' &&
+    Number.isFinite(value.price) &&
+    typeof value.originalPrice === 'number' &&
+    Number.isFinite(value.originalPrice) &&
+    Array.isArray(value.sizes) &&
+    value.sizes.every((size) => typeof size === 'string') &&
+    typeof value.image === 'string' &&
+    typeof value.alt === 'string'
+  );
+};
+
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Cart state
   const [cart, setCart] = useState<CartItem[]>([
@@ -77,7 +118,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       size: 'L',
       quantity: 1,
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAx_nh7u5NMuYWbwzorPCX5UGSNLtDgXAfIzrRXFU62wcfso4YYoaqbS8Sdo0MhF_byp9QJMGawmcn-ysbZK4Txa8IKxaOCbHo-Al9e5KBgnB1wWn12ByfdrKYRAfbsfqin7dg0jMnB4EIyxAXEYwpcGdUn_fi6gETcT0a3TDIAFI7keCvPhtRp6jFtg-WqjTegG2GGU2p8wHZltceG5HpNUgdoN9bEa8OwrwCTmAo',
-    }
+    },
   ]);
 
   // Wishlist state
@@ -107,18 +148,23 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Hydrate from localStorage once on client mount
   useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem('hive_cart');
-      if (savedCart) {
-        setCart(JSON.parse(savedCart));
+    const readSavedArray = <T,>(key: string, isValid: (item: unknown) => item is T): T[] | null => {
+      try {
+        const saved = localStorage.getItem(key);
+        if (!saved) return null;
+
+        const parsed: unknown = JSON.parse(saved);
+        return Array.isArray(parsed) ? parsed.filter(isValid) : null;
+      } catch (e) {
+        console.error(e);
+        return null;
       }
-      const savedWishlist = localStorage.getItem('hive_wishlist');
-      if (savedWishlist) {
-        setWishlist(JSON.parse(savedWishlist));
-      }
-    } catch (e) {
-      console.error(e);
-    }
+    };
+
+    const savedCart = readSavedArray('hive_cart', isCartItem);
+    const savedWishlist = readSavedArray('hive_wishlist', isProduct);
+    if (savedCart) setCart(savedCart);
+    if (savedWishlist) setWishlist(savedWishlist);
     setIsHydrated(true);
   }, []);
 
@@ -155,9 +201,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         (i) => i.productId === newItem.productId && i.size === newItem.size
       );
       if (existingIndex > -1) {
-        const updated = [...prev];
-        updated[existingIndex].quantity += newItem.quantity;
-        return updated;
+        return prev.map((item, index) =>
+          index === existingIndex ? { ...item, quantity: item.quantity + newItem.quantity } : item
+        );
       }
       return [...prev, { ...newItem, id: `${newItem.productId}-${newItem.size}-${Date.now()}` }];
     });

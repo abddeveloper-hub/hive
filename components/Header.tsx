@@ -19,11 +19,15 @@ export default function Header() {
   return (
     <header className="fixed top-0 w-full z-40 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.25)]">
       {/* Top Banner */}
-      <div className="w-full bg-rust-leather text-pure-white py-1 px-4 text-center">
+      <Link
+        aria-label="Shop the HIVE clearance sale"
+        className="block w-full bg-rust-leather text-pure-white py-1 px-4 text-center hover:bg-secondary-container transition-colors"
+        href="/clearance"
+      >
         <p className="font-label-mono-sm text-label-mono-sm uppercase tracking-widest truncate">
-          Free shipping on orders above ₹1,999 • Diwali Drop Live
+          Clearance // Up to 20% off • Free shipping above ₹1,999
         </p>
-      </div>
+      </Link>
 
       {/* Main Bar */}
       <div className="h-20 px-4 flex items-center justify-between gap-3">

@@ -35,10 +35,16 @@ export default function Hero() {
           </p>
           <div className="pt-1 flex gap-2">
             <a
-              className="w-full bg-primary text-pitch-black font-headline-sm text-headline-sm uppercase py-3.5 px-6 text-center font-bold tracking-wider hover:bg-pure-white transition-all shadow-md active:scale-[0.98]"
+              className="flex-1 bg-primary text-pitch-black font-headline-sm text-headline-sm uppercase py-3.5 px-4 text-center font-bold tracking-wider hover:bg-pure-white transition-all shadow-md active:scale-[0.98]"
               href="#denim-catalog"
             >
               EXPLORE NOW
+            </a>
+            <a
+              className="flex-1 border border-pure-white/70 bg-pitch-black/40 text-pure-white font-headline-sm text-headline-sm uppercase py-3.5 px-4 text-center font-bold tracking-wider hover:bg-pure-white hover:text-pitch-black transition-all active:scale-[0.98]"
+              href="/clearance"
+            >
+              CLEARANCE
             </a>
           </div>
         </div>
