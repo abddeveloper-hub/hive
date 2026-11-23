@@ -70,7 +70,7 @@ export default function Hero() {
     }
   };
 
-  // Canvas drawing function
+  // Canvas drawing function with unblocked framing
   const renderCanvas = useCallback((frameIdx: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -92,7 +92,6 @@ export default function Hero() {
     ctx.fillStyle = '#0e0e0e';
     ctx.fillRect(0, 0, width, height);
 
-    // Containment calculations:
     // Source frame: 848x478 landscape. Subject (jeans) is vertically centered and occupies
     // from Y=20 to Y=470 (~94% height) and horizontal center X=375..500.
     const imgW = img.naturalWidth;
@@ -100,17 +99,19 @@ export default function Hero() {
     const imgAspect = imgW / imgH;
 
     const isMobile = width < 768;
-    // Scale to fit height nicely with generous breathing room
-    const targetH = isMobile ? height * 0.82 : height * 0.86;
+    // Scale product so it stays clearly framed with plenty of breathing room around it
+    // On mobile, scale slightly smaller (68%) and position in upper-center (38% from top)
+    // so the bottom 30% is completely clear for the compact callout cards!
+    const targetH = isMobile ? height * 0.68 : height * 0.78;
     const targetW = targetH * imgAspect;
 
     const drawX = (width - targetW) / 2;
-    const drawY = (height - targetH) / 2;
+    const drawY = isMobile ? (height - targetH) * 0.38 : (height - targetH) / 2;
 
     // Draw frame
     ctx.drawImage(img, drawX, drawY, targetW, targetH);
 
-    // Smooth soft edge feathering so studio frame edges melt cleanly into #0e0e0e
+    // Soft edge feathering so studio frame edges melt cleanly into #0e0e0e
     const hFade = Math.min(140, targetW * 0.16);
     const vFade = Math.min(100, targetH * 0.14);
 
@@ -255,14 +256,14 @@ export default function Hero() {
     // 1. Intro overlay: active 0.0 to 0.20
     if (introRef.current) {
       let opacity = 0;
-      let translateY = -20;
+      let translateY = -15;
       if (p <= 0.12) {
         opacity = 1;
         translateY = 0;
       } else if (p < 0.20) {
         const t = (p - 0.12) / 0.08;
         opacity = 1 - t;
-        translateY = -24 * t;
+        translateY = -18 * t;
       }
       introRef.current.style.opacity = opacity.toFixed(3);
       introRef.current.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
@@ -284,18 +285,18 @@ export default function Hero() {
     // 2. Detail Callout 1 (Fabric & Weight): active 0.28 to 0.55
     if (spec1Ref.current) {
       let opacity = 0;
-      let translateY = 20;
+      let translateY = 15;
       if (p >= 0.28 && p < 0.35) {
         const t = (p - 0.28) / 0.07;
         opacity = t;
-        translateY = 24 * (1 - t);
+        translateY = 16 * (1 - t);
       } else if (p >= 0.35 && p <= 0.48) {
         opacity = 1;
         translateY = 0;
       } else if (p > 0.48 && p <= 0.56) {
         const t = (p - 0.48) / 0.08;
         opacity = 1 - t;
-        translateY = -24 * t;
+        translateY = -16 * t;
       }
       spec1Ref.current.style.opacity = opacity.toFixed(3);
       spec1Ref.current.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
@@ -305,18 +306,18 @@ export default function Hero() {
     // 3. Detail Callout 2 (Stitch & Precision Fit): active 0.60 to 0.86
     if (spec2Ref.current) {
       let opacity = 0;
-      let translateY = 20;
+      let translateY = 15;
       if (p >= 0.60 && p < 0.67) {
         const t = (p - 0.60) / 0.07;
         opacity = t;
-        translateY = 24 * (1 - t);
+        translateY = 16 * (1 - t);
       } else if (p >= 0.67 && p <= 0.79) {
         opacity = 1;
         translateY = 0;
       } else if (p > 0.79 && p <= 0.87) {
         const t = (p - 0.79) / 0.08;
         opacity = 1 - t;
-        translateY = -24 * t;
+        translateY = -16 * t;
       }
       spec2Ref.current.style.opacity = opacity.toFixed(3);
       spec2Ref.current.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
@@ -326,11 +327,11 @@ export default function Hero() {
     // 4. Final CTA: active 0.88 to 1.0
     if (ctaRef.current) {
       let opacity = 0;
-      let translateY = 25;
+      let translateY = 18;
       if (p >= 0.88 && p < 0.94) {
         const t = (p - 0.88) / 0.06;
         opacity = t;
-        translateY = 24 * (1 - t);
+        translateY = 18 * (1 - t);
       } else if (p >= 0.94) {
         opacity = 1;
         translateY = 0;
@@ -463,206 +464,163 @@ export default function Hero() {
         </div>
 
         {/* Top Vignette Gradient for Header Contrast */}
-        <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-surface-dark via-surface-dark/70 to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-x-0 top-0 h-28 md:h-32 bg-gradient-to-b from-surface-dark via-surface-dark/60 to-transparent pointer-events-none z-10" />
 
         {/* Bottom Vignette Gradient for Seamless Section Handoff */}
-        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-surface via-surface/80 to-transparent pointer-events-none z-10" />
-
-        {/* Left & Right Subtle Scrims for Ultra-Wide Displays */}
-        <div className="hidden lg:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-surface-dark/80 to-transparent pointer-events-none z-10" />
-        <div className="hidden lg:block absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-surface-dark/80 to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-x-0 bottom-0 h-36 md:h-40 bg-gradient-to-t from-surface via-surface/75 to-transparent pointer-events-none z-10" />
 
         {/* =========================================================================
-            MILESTONE OVERLAYS
+            REFINED CHOREOGRAPHED OVERLAYS (COMPACT & UNBLOCKING THE PRODUCT)
         ========================================================================= */}
 
-        {/* 1. INTRO (0% – 20%): Editorial Headline & Scroll Invitation */}
+        {/* 1. INTRO (0% – 20%): Compact Upper Placement */}
         <div
           ref={introRef}
-          className="absolute inset-x-0 top-[18%] md:top-[20%] flex flex-col items-center text-center px-4 z-20 pointer-events-none transition-transform will-change-transform"
+          className="absolute inset-x-0 top-14 sm:top-16 md:top-20 flex flex-col items-center text-center px-4 z-20 pointer-events-none transition-transform will-change-transform"
         >
-          <div className="inline-flex items-center gap-2 border border-outline-variant/60 bg-surface-container-lowest/80 backdrop-blur-md px-3 py-1 mb-4 shadow-lg">
+          <div className="inline-flex items-center gap-1.5 border border-outline-variant/40 bg-surface-container-lowest/80 backdrop-blur-md px-2.5 py-0.5 mb-2 shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-rust-leather animate-pulse" />
-            <span className="font-label-mono-sm text-[10px] md:text-xs uppercase text-on-surface tracking-[0.22em] font-semibold">
-              DROP 09 // 3D ARCHIVE ROTATION
+            <span className="font-label-mono-sm text-[9px] md:text-[10px] uppercase text-on-surface tracking-[0.2em] font-medium">
+              DROP 09 // 3D ROTATION
             </span>
           </div>
 
-          <h1 className="font-display-hero-mobile md:text-7xl lg:text-8xl text-pure-white uppercase font-bold tracking-tight leading-none drop-shadow-2xl">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-pure-white uppercase font-bold tracking-tight leading-tight drop-shadow-md">
             ENGINEERED DENIM
           </h1>
 
-          <p className="mt-3 md:mt-4 font-label-mono-sm text-xs md:text-sm text-on-surface-variant uppercase tracking-[0.18em] max-w-xl">
-            14.5 OZ JAPANESE RAW SELVEDGE // ARTICULATED 3D ANATOMY
+          <p className="mt-1 font-label-mono-sm text-[11px] md:text-xs text-on-surface-variant uppercase tracking-[0.14em]">
+            14.5 OZ JAPANESE RAW SELVEDGE • 3D ARTICULATED FIT
           </p>
-
-          <div className="mt-4 hidden sm:flex items-center gap-3">
-            <span className="font-label-mono-sm text-[10px] text-outline uppercase tracking-wider border-b border-outline-variant pb-0.5">
-              100% RING-SPUN COTTON
-            </span>
-            <span className="text-outline">•</span>
-            <span className="font-label-mono-sm text-[10px] text-outline uppercase tracking-wider border-b border-outline-variant pb-0.5">
-              TOYODA SHUTTLE LOOM
-            </span>
-            <span className="text-outline">•</span>
-            <span className="font-label-mono-sm text-[10px] text-outline uppercase tracking-wider border-b border-outline-variant pb-0.5">
-              KOJIMA MILLS
-            </span>
-          </div>
         </div>
 
         {/* Scroll Indicator (Fades out immediately upon first scroll) */}
         <div
           ref={scrollIndicatorRef}
-          className="absolute inset-x-0 bottom-12 md:bottom-14 flex flex-col items-center justify-center gap-2 z-20 pointer-events-none transition-opacity duration-300"
+          className="absolute inset-x-0 bottom-8 md:bottom-10 flex flex-col items-center justify-center gap-1.5 z-20 pointer-events-none transition-opacity duration-300"
         >
-          <span className="font-label-mono-sm text-[10px] uppercase text-outline tracking-[0.25em]">
+          <span className="font-label-mono-sm text-[9px] uppercase text-outline tracking-[0.25em]">
             SCROLL TO EXPLORE 360°
           </span>
-          <div className="w-5 h-8 border border-outline-variant rounded-full flex justify-center p-1">
-            <div className="w-1 h-2 bg-primary rounded-full animate-bounce" />
+          <div className="w-4 h-6 border border-outline-variant/60 rounded-full flex justify-center p-0.5">
+            <div className="w-1 h-1.5 bg-primary rounded-full animate-bounce" />
           </div>
         </div>
 
-        {/* 2. DETAIL CALLOUT 1 (30% – 55%): Fabric Weight & Texture (Left-Aligned) */}
+        {/* 2. DETAIL CALLOUT 1 (30% – 55%): Fabric & Weight
+            Desktop: Far-left flank, leaving the center jeans completely open!
+            Mobile: Bottom-positioned compact pill card in the open negative space below the jeans! */}
         <div
           ref={spec1Ref}
-          className="absolute left-4 md:left-12 lg:left-24 bottom-24 md:bottom-auto md:top-1/2 md:-translate-y-1/2 max-w-sm md:max-w-md z-20 pointer-events-none opacity-0 transition-transform will-change-transform"
+          className="absolute inset-x-4 sm:inset-x-auto sm:left-6 md:left-10 lg:left-16 xl:left-20 bottom-10 sm:bottom-12 md:bottom-auto md:top-1/2 md:-translate-y-1/2 max-w-xs md:max-w-[290px] lg:max-w-[320px] mx-auto sm:mx-0 z-20 pointer-events-none opacity-0 transition-transform will-change-transform"
         >
-          <div className="bg-surface-container-lowest/90 backdrop-blur-xl border border-outline-variant/60 p-5 md:p-7 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-outline-variant/40 pb-2">
-              <span className="font-label-mono-sm text-[10px] uppercase text-rust-leather tracking-widest font-bold">
+          <div className="bg-surface-container-lowest/85 backdrop-blur-xl border border-outline-variant/40 p-4 md:p-5 shadow-2xl space-y-2.5">
+            <div className="flex items-center justify-between border-b border-outline-variant/30 pb-1.5">
+              <span className="font-label-mono-sm text-[9px] uppercase text-rust-leather tracking-widest font-bold">
                 SPEC 01 // TEXTURE
               </span>
-              <span className="font-label-mono-sm text-[10px] uppercase text-outline tracking-widest">
-                RAW FINISH
+              <span className="font-label-mono-sm text-[9px] uppercase text-outline tracking-wider">
+                RAW SLUB
               </span>
             </div>
 
             <div className="space-y-1">
-              <h3 className="font-headline-sm md:text-2xl text-pure-white uppercase font-bold tracking-wider">
+              <h3 className="text-sm md:text-base text-pure-white uppercase font-bold tracking-wider">
                 14.5 OZ VINTAGE SELVEDGE
               </h3>
-              <p className="font-body-sm text-xs md:text-sm text-on-surface-variant leading-relaxed">
-                Milled on vintage 1968 Toyoda low-tension shuttle looms in Kojima. Unsanforized, pure rope-dyed indigo warp with distinctive uneven slub yarn texture engineered for high-contrast generational fades.
+              <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+                Toyoda shuttle loom milled in Kojima. Unsanforized deep rope-dyed indigo with textured slub character designed for high-contrast generational fades.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-outline-variant/30 text-[11px] font-label-mono-sm">
-              <div>
-                <span className="text-outline uppercase block text-[9px]">WEAVE DENSITY</span>
-                <span className="text-on-surface font-semibold">3×1 Right-Hand Twill</span>
-              </div>
-              <div>
-                <span className="text-outline uppercase block text-[9px]">YARN COUNT</span>
-                <span className="text-on-surface font-semibold">6.5s Ringspun Slub</span>
-              </div>
-              <div>
-                <span className="text-outline uppercase block text-[9px]">DYE INVOCATION</span>
-                <span className="text-on-surface font-semibold">12 Dip Pure Indigo</span>
-              </div>
-              <div>
-                <span className="text-outline uppercase block text-[9px]">SELVEDGE ID</span>
-                <span className="text-on-surface font-semibold">Classic Red Ticker</span>
-              </div>
+            <div className="flex items-center gap-2 pt-1 border-t border-outline-variant/20 text-[10px] font-label-mono-sm text-outline">
+              <span className="bg-surface-container px-2 py-0.5 text-on-surface">3×1 RHT WEAVE</span>
+              <span className="bg-surface-container px-2 py-0.5 text-on-surface">12-DIP INDIGO</span>
             </div>
           </div>
         </div>
 
-        {/* 3. DETAIL CALLOUT 2 (65% – 85%): Stitch & Fit Precision (Right-Aligned) */}
+        {/* 3. DETAIL CALLOUT 2 (65% – 85%): Stitch & Precision Fit
+            Desktop: Far-right flank, leaving the center jeans completely open!
+            Mobile: Bottom-positioned compact pill card in the open negative space below the jeans! */}
         <div
           ref={spec2Ref}
-          className="absolute right-4 md:right-12 lg:right-24 bottom-24 md:bottom-auto md:top-1/2 md:-translate-y-1/2 max-w-sm md:max-w-md z-20 pointer-events-none opacity-0 transition-transform will-change-transform"
+          className="absolute inset-x-4 sm:inset-x-auto sm:right-6 md:right-10 lg:right-16 xl:right-20 bottom-10 sm:bottom-12 md:bottom-auto md:top-1/2 md:-translate-y-1/2 max-w-xs md:max-w-[290px] lg:max-w-[320px] mx-auto sm:mx-0 z-20 pointer-events-none opacity-0 transition-transform will-change-transform"
         >
-          <div className="bg-surface-container-lowest/90 backdrop-blur-xl border border-outline-variant/60 p-5 md:p-7 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-outline-variant/40 pb-2">
-              <span className="font-label-mono-sm text-[10px] uppercase text-rust-leather tracking-widest font-bold">
+          <div className="bg-surface-container-lowest/85 backdrop-blur-xl border border-outline-variant/40 p-4 md:p-5 shadow-2xl space-y-2.5">
+            <div className="flex items-center justify-between border-b border-outline-variant/30 pb-1.5">
+              <span className="font-label-mono-sm text-[9px] uppercase text-rust-leather tracking-widest font-bold">
                 SPEC 02 // ARCHITECTURE
               </span>
-              <span className="font-label-mono-sm text-[10px] uppercase text-outline tracking-widest">
-                ANATOMICAL CUT
+              <span className="font-label-mono-sm text-[9px] uppercase text-outline tracking-wider">
+                3D CUT
               </span>
             </div>
 
             <div className="space-y-1">
-              <h3 className="font-headline-sm md:text-2xl text-pure-white uppercase font-bold tracking-wider">
+              <h3 className="text-sm md:text-base text-pure-white uppercase font-bold tracking-wider">
                 ARTICULATED KNEE DARTING
               </h3>
-              <p className="font-body-sm text-xs md:text-sm text-on-surface-variant leading-relaxed">
-                Pre-shaped 3D ergonomics prevent fabric bunching and tension points. Reinforced with heavy-gauge Japanese aramid poly-core thread, triple-needle flat-felled inseams, and custom matte gunmetal tack hardware.
+              <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+                Pre-shaped 3D ergonomics eliminate knee bunching while stacking effortlessly over boots. Reinforced with heavy-gauge Japanese chainstitching.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-outline-variant/30 text-[11px] font-label-mono-sm">
-              <div>
-                <span className="text-outline uppercase block text-[9px]">OUTSEAM</span>
-                <span className="text-on-surface font-semibold">Continuous Clean Fold</span>
-              </div>
-              <div>
-                <span className="text-outline uppercase block text-[9px]">HARDWARE</span>
-                <span className="text-on-surface font-semibold">Matte Black Steel Tacks</span>
-              </div>
-              <div>
-                <span className="text-outline uppercase block text-[9px]">INSEAM FINISH</span>
-                <span className="text-on-surface font-semibold">Triple Chainstitch</span>
-              </div>
-              <div>
-                <span className="text-outline uppercase block text-[9px]">POCKET LINING</span>
-                <span className="text-on-surface font-semibold">9 oz Cotton Herringbone</span>
-              </div>
+            <div className="flex items-center gap-2 pt-1 border-t border-outline-variant/20 text-[10px] font-label-mono-sm text-outline">
+              <span className="bg-surface-container px-2 py-0.5 text-on-surface">RED SELVEDGE ID</span>
+              <span className="bg-surface-container px-2 py-0.5 text-on-surface">STEEL HARDWARE</span>
             </div>
           </div>
         </div>
 
-        {/* 4. FINAL CTA (90% – 100%): Centered Product Card & Action */}
+        {/* 4. FINAL CTA (90% – 100%): Positioned at the bottom (NOT in the center covering the pants!) */}
         <div
           ref={ctaRef}
-          className="absolute inset-x-4 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 bottom-20 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg z-20 pointer-events-none opacity-0 transition-transform will-change-transform"
+          className="absolute inset-x-4 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 bottom-8 md:bottom-10 md:w-full md:max-w-md z-20 pointer-events-none opacity-0 transition-transform will-change-transform"
         >
-          <div className="bg-surface-container-lowest/95 backdrop-blur-2xl border border-pure-white/20 p-6 md:p-8 shadow-2xl text-center space-y-4">
-            <div className="inline-flex items-center gap-2 bg-rust-leather text-pure-white font-badge-caps text-[10px] uppercase px-2.5 py-0.5 tracking-widest font-bold">
-              BATCH 04 // LIMITED RUN
-            </div>
-
-            <div className="space-y-1">
-              <h2 className="font-display-hero-mobile md:text-4xl text-pure-white uppercase font-bold tracking-tight">
-                VINTAGE BOOTCUT // RAW
-              </h2>
-              <p className="font-label-mono-sm text-xs text-on-surface-variant uppercase tracking-wider">
-                14.5 OZ RAW JAPANESE SELVEDGE DENIM
-              </p>
-            </div>
-
-            <div className="flex items-center justify-center gap-3 py-1">
-              <span className="text-2xl md:text-3xl font-bold font-label-mono text-pure-white">
-                ₹1,199
+          <div className="bg-surface-container-lowest/90 backdrop-blur-2xl border border-pure-white/15 p-4 md:p-5 shadow-2xl space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="bg-rust-leather text-pure-white font-badge-caps text-[9px] uppercase px-2 py-0.5 tracking-widest font-bold">
+                DROP 09 // READY TO SHIP
               </span>
-              <span className="text-sm md:text-base line-through text-outline font-label-mono">
-                ₹1,499
-              </span>
-              <span className="text-[11px] font-bold text-rust-leather bg-secondary-fixed/20 border border-rust-leather/40 px-2 py-0.5">
-                20% OFF
+              <span className="text-[10px] font-label-mono-sm text-outline uppercase tracking-wider">
+                ● 14 pairs left
               </span>
             </div>
 
-            <p className="text-[11px] font-label-mono-sm text-outline uppercase tracking-wider">
-              ● Only 14 pairs remaining in size 30–34
-            </p>
+            <div className="flex items-baseline justify-between">
+              <div>
+                <h2 className="text-base md:text-lg text-pure-white uppercase font-bold tracking-tight">
+                  VINTAGE BOOTCUT // RAW
+                </h2>
+                <p className="font-label-mono-sm text-[10px] text-on-surface-variant uppercase tracking-wider">
+                  14.5 OZ JAPANESE SELVEDGE
+                </p>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-lg md:text-xl font-bold font-label-mono text-pure-white">
+                  ₹1,199
+                </span>
+                <span className="text-xs line-through text-outline font-label-mono">
+                  ₹1,499
+                </span>
+              </div>
+            </div>
 
-            <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
+            <div className="pt-1 flex gap-2 pointer-events-auto">
               <button
                 type="button"
                 onClick={handleShopNow}
-                className="flex-1 bg-primary text-pitch-black font-headline-sm text-xs md:text-sm uppercase py-3.5 px-6 font-bold tracking-wider hover:bg-pure-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all active:scale-[0.98]"
+                className="flex-1 bg-primary text-pitch-black font-headline-sm text-xs uppercase py-2.5 px-4 font-bold tracking-wider hover:bg-pure-white hover:shadow-[0_0_15px_rgba(255,255,255,0.25)] transition-all active:scale-[0.98]"
               >
-                SHOP NOW — QUICK VIEW
+                QUICK VIEW
               </button>
               <button
                 type="button"
                 onClick={scrollToExplore}
-                className="flex-1 border border-pure-white/40 bg-pitch-black/40 text-pure-white font-headline-sm text-xs md:text-sm uppercase py-3.5 px-4 font-bold tracking-wider hover:bg-pure-white/10 transition-all active:scale-[0.98]"
+                className="flex-1 border border-pure-white/30 bg-pitch-black/40 text-pure-white font-headline-sm text-xs uppercase py-2.5 px-3 font-bold tracking-wider hover:bg-pure-white/10 transition-all active:scale-[0.98]"
               >
-                EXPLORE ALL FITS ↓
+                EXPLORE ALL ↓
               </button>
             </div>
           </div>
@@ -671,17 +629,16 @@ export default function Hero() {
         {/* Minimal HUD Scrub & Angle Tracker */}
         <div
           ref={hudRef}
-          className="absolute right-4 md:right-8 top-28 md:top-32 flex flex-col items-end gap-1 pointer-events-none z-20"
+          className="absolute right-4 md:right-8 top-20 md:top-24 flex flex-col items-end gap-1 pointer-events-none z-20"
         >
-          <div className="flex items-center gap-2 font-label-mono-sm text-[10px] md:text-xs text-outline tracking-widest">
+          <div className="flex items-center gap-1.5 font-label-mono-sm text-[9px] md:text-[10px] text-outline tracking-widest">
             <span className="text-on-surface font-semibold" ref={hudAngleRef}>0°</span>
             <span className="text-outline-variant">|</span>
             <span>FRAME</span>
             <span className="text-pure-white font-mono" ref={hudFrameRef}>001</span>
             <span className="text-outline-variant">/ {TOTAL_FRAMES}</span>
           </div>
-          {/* Subtle Scrub Depth Track */}
-          <div className="w-24 md:w-32 h-[2px] bg-outline-variant/30 overflow-hidden relative">
+          <div className="w-20 md:w-28 h-[2px] bg-outline-variant/30 overflow-hidden relative">
             <div
               ref={hudProgressLineRef}
               className="h-full bg-primary transition-all duration-75"
