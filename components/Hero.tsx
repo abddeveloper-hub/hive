@@ -70,7 +70,7 @@ export default function Hero() {
     }
   };
 
-  // Canvas drawing function with unblocked framing
+  // Canvas drawing function with 4K high-fidelity bicubic rendering
   const renderCanvas = useCallback((frameIdx: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -88,19 +88,22 @@ export default function Hero() {
     // Reset transform & scale to dpr
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
+    // Ensure high-quality bicubic smoothing for 4K crispness
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
     // Dark backdrop fill
     ctx.fillStyle = '#0e0e0e';
     ctx.fillRect(0, 0, width, height);
 
-    // Source frame: 848x478 landscape. Subject (jeans) is vertically centered and occupies
-    // from Y=20 to Y=470 (~94% height) and horizontal center X=375..500.
+    // 1696x956 enhanced frames
     const imgW = img.naturalWidth;
     const imgH = img.naturalHeight;
     const imgAspect = imgW / imgH;
 
     const isMobile = width < 768;
     // Scale product so it stays clearly framed with plenty of breathing room around it
-    // On mobile, scale slightly smaller (68%) and position in upper-center (38% from top)
+    // On mobile, scale to 68% and position in upper-center (38% from top)
     // so the bottom 30% is completely clear for the compact callout cards!
     const targetH = isMobile ? height * 0.68 : height * 0.78;
     const targetW = targetH * imgAspect;
@@ -108,7 +111,7 @@ export default function Hero() {
     const drawX = (width - targetW) / 2;
     const drawY = isMobile ? (height - targetH) * 0.38 : (height - targetH) / 2;
 
-    // Draw frame
+    // Draw high-resolution frame
     ctx.drawImage(img, drawX, drawY, targetW, targetH);
 
     // Soft edge feathering so studio frame edges melt cleanly into #0e0e0e
@@ -160,13 +163,13 @@ export default function Hero() {
     lastDrawnFrameRef.current = frameIdx;
   }, []);
 
-  // Window resize handler
+  // Window resize handler with retina DPR support up to 2.5x
   const handleResize = useCallback(() => {
     const canvas = canvasRef.current;
     const viewport = viewportRef.current;
     if (!canvas || !viewport) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
     dprRef.current = dpr;
 
     const w = viewport.clientWidth;
@@ -176,6 +179,12 @@ export default function Hero() {
     canvas.height = Math.round(h * dpr);
     canvas.style.width = `${w}px`;
     canvas.style.height = `${h}px`;
+
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+    }
 
     if (isLoadedRef.current) {
       renderCanvas(Math.round(currentFrameRef.current));
@@ -455,11 +464,21 @@ export default function Hero() {
         <div
           ref={canvasContainerRef}
           className="relative w-full h-full flex items-center justify-center will-change-transform"
-          style={{ transformStyle: 'preserve-3d' }}
+          style={{
+            transformStyle: 'preserve-3d',
+            backfaceVisibility: 'hidden',
+            WebkitFontSmoothing: 'subpixel-antialiased',
+          }}
         >
           <canvas
             ref={canvasRef}
             className="w-full h-full pointer-events-none"
+            style={{
+              imageRendering: '-webkit-optimize-contrast',
+              filter: 'contrast(1.08) saturate(1.06) brightness(1.01)',
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden',
+            }}
           />
         </div>
 

@@ -208,8 +208,8 @@
         <div id="hero-viewport" class="sticky top-0 h-screen h-[100dvh] w-full overflow-hidden bg-surface-dark flex items-center justify-center">
           
           <!-- 3D Parallax Canvas Container -->
-          <div id="hero-canvas-container" class="relative w-full h-full flex items-center justify-center will-change-transform" style="transform-style: preserve-3d;">
-            <canvas id="hero-canvas" class="w-full h-full pointer-events-none"></canvas>
+          <div id="hero-canvas-container" class="relative w-full h-full flex items-center justify-center will-change-transform" style="transform-style: preserve-3d; backface-visibility: hidden; -webkit-font-smoothing: subpixel-antialiased;">
+            <canvas id="hero-canvas" class="w-full h-full pointer-events-none" style="image-rendering: -webkit-optimize-contrast; filter: contrast(1.08) saturate(1.06) brightness(1.01); transform: translateZ(0); backface-visibility: hidden;"></canvas>
           </div>
 
           <!-- Top Gradient Scrim for Header Legibility -->
@@ -1928,13 +1928,18 @@
 
       function resizeCanvas() {
         if (!canvas || !viewport) return;
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        dpr = Math.min(window.devicePixelRatio || 1, 2.5);
         const w = viewport.clientWidth;
         const h = viewport.clientHeight;
         canvas.width = Math.round(w * dpr);
         canvas.height = Math.round(h * dpr);
         canvas.style.width = w + 'px';
         canvas.style.height = h + 'px';
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+        }
         if (isLoaded) {
           drawCanvas(Math.round(currentFrame));
         }
@@ -1950,6 +1955,8 @@
         const h = canvas.height / dpr;
 
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
         ctx.fillStyle = '#0e0e0e';
         ctx.fillRect(0, 0, w, h);
 
