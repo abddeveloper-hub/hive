@@ -202,37 +202,241 @@
   <main class="flex flex-col relative w-full pt-20 pb-24 bg-surface min-h-screen">
     <div class="flex flex-col w-full pb-8">
 
-      <!-- 1. CAMPAIGN HERO BANNER -->
-      <section class="relative w-full overflow-hidden bg-surface-container-lowest">
-        <div class="relative w-full aspect-[4/5] max-h-[520px]">
-          <img alt="HIVE Editorial Lookbook" class="w-full h-full object-cover object-top opacity-85" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDirQroA1268KwtEQHni702QqK0BewgBfOGk6KcD_nwkoMVYjqQ8LY4SyN50aivlx7zmRQfLpgFgijky8ScdVE1Gi9Gmjfy3K1RGiZa06PWmHWbQNl7RVg9Pu4Ka6iR4ubUPsFRhVzwrYafFCp6wgGK4Dv-2Va0cHggMnDQt1DBT_R9M504n0AD6E5Zm6QuWXxjJ7smCHOC3zjqq28au7PMPQbpok29Xff4I1YfIXc"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-surface-dark via-surface-dark/40 to-transparent"></div>
-          <div class="absolute inset-x-0 bottom-0 p-5 flex flex-col justify-end space-y-3">
-            <div class="flex items-center gap-2">
-              <span class="bg-rust-leather text-pure-white font-badge-caps text-badge-caps uppercase px-2 py-0.5 tracking-widest">
-                DROP 09 LIVE
-              </span>
-              <span class="font-label-mono-sm text-label-mono-sm uppercase text-on-surface-variant tracking-wider">
-                FW // 2025
+      <!-- 1. 3D SCROLL-DRIVEN HERO SECTION -->
+      <section id="hero-3d-track" class="relative w-full h-[350vh] md:h-[450vh] -mt-20 bg-surface-dark select-none">
+        <!-- Sticky Fullscreen Inner Viewport -->
+        <div id="hero-viewport" class="sticky top-0 h-screen h-[100dvh] w-full overflow-hidden bg-surface-dark flex items-center justify-center">
+          
+          <!-- 3D Parallax Canvas Container -->
+          <div id="hero-canvas-container" class="relative w-full h-full flex items-center justify-center will-change-transform" style="transform-style: preserve-3d;">
+            <canvas id="hero-canvas" class="w-full h-full pointer-events-none"></canvas>
+          </div>
+
+          <!-- Top Gradient Scrim for Header Legibility -->
+          <div class="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-surface-dark via-surface-dark/70 to-transparent pointer-events-none z-10"></div>
+
+          <!-- Bottom Gradient Scrim for Seamless Transition into Ticker -->
+          <div class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-surface via-surface/80 to-transparent pointer-events-none z-10"></div>
+
+          <!-- Wide Screen Side Vignettes -->
+          <div class="hidden lg:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-surface-dark/80 to-transparent pointer-events-none z-10"></div>
+          <div class="hidden lg:block absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-surface-dark/80 to-transparent pointer-events-none z-10"></div>
+
+          <!-- MILESTONE 1: 0% - 20% Intro Typography -->
+          <div id="hero-intro" class="absolute inset-x-0 top-[18%] md:top-[20%] flex flex-col items-center text-center px-4 z-20 pointer-events-none transition-transform will-change-transform">
+            <div class="inline-flex items-center gap-2 border border-outline-variant/60 bg-surface-container-lowest/80 backdrop-blur-md px-3 py-1 mb-4 shadow-lg">
+              <span class="w-1.5 h-1.5 rounded-full bg-rust-leather animate-pulse"></span>
+              <span class="font-label-mono-sm text-[10px] md:text-xs uppercase text-on-surface tracking-[0.22em] font-semibold">
+                DROP 09 // 3D ARCHIVE ROTATION
               </span>
             </div>
-            <div class="space-y-1">
-              <h1 class="font-display-hero-mobile text-display-hero-mobile text-pure-white uppercase tracking-tight font-bold leading-none">
-                CAMPUS CHAOS
-              </h1>
-              <p class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">
-                Denims, Cargos &amp; Streetwear — HIVE
-              </p>
-            </div>
-            <p class="font-body-sm text-body-sm text-on-surface/90 italic tracking-wide max-w-[280px]">
-              “Made for men who’ve outgrown doubt.”
+
+            <h1 class="font-display-hero-mobile md:text-7xl lg:text-8xl text-pure-white uppercase font-bold tracking-tight leading-none drop-shadow-2xl">
+              ENGINEERED DENIM
+            </h1>
+
+            <p class="mt-3 md:mt-4 font-label-mono-sm text-xs md:text-sm text-on-surface-variant uppercase tracking-[0.18em] max-w-xl">
+              14.5 OZ JAPANESE RAW SELVEDGE // ARTICULATED 3D ANATOMY
             </p>
-            <div class="pt-1 flex gap-2">
-              <a class="w-full bg-primary text-pitch-black font-headline-sm text-headline-sm uppercase py-3.5 px-6 text-center font-bold tracking-wider hover:bg-pure-white transition-all shadow-md active:scale-[0.98]" href="#denim-catalog">
-                EXPLORE NOW
-              </a>
+
+            <div class="mt-4 hidden sm:flex items-center gap-3">
+              <span class="font-label-mono-sm text-[10px] text-outline uppercase tracking-wider border-b border-outline-variant pb-0.5">
+                100% RING-SPUN COTTON
+              </span>
+              <span class="text-outline">•</span>
+              <span class="font-label-mono-sm text-[10px] text-outline uppercase tracking-wider border-b border-outline-variant pb-0.5">
+                TOYODA SHUTTLE LOOM
+              </span>
+              <span class="text-outline">•</span>
+              <span class="font-label-mono-sm text-[10px] text-outline uppercase tracking-wider border-b border-outline-variant pb-0.5">
+                KOJIMA MILLS
+              </span>
             </div>
           </div>
+
+          <!-- Scroll Indicator (Fades out immediately upon first scroll) -->
+          <div id="hero-scroll-indicator" class="absolute inset-x-0 bottom-12 md:bottom-14 flex flex-col items-center justify-center gap-2 z-20 pointer-events-none transition-opacity duration-300">
+            <span class="font-label-mono-sm text-[10px] uppercase text-outline tracking-[0.25em]">
+              SCROLL TO EXPLORE 360°
+            </span>
+            <div class="w-5 h-8 border border-outline-variant rounded-full flex justify-center p-1">
+              <div class="w-1 h-2 bg-primary rounded-full animate-bounce"></div>
+            </div>
+          </div>
+
+          <!-- MILESTONE 2: 30% - 55% Detail Callout 1 (Left-Aligned Fabric Card) -->
+          <div id="hero-spec1" class="absolute left-4 md:left-12 lg:left-24 bottom-24 md:bottom-auto md:top-1/2 md:-translate-y-1/2 max-w-sm md:max-w-md z-20 pointer-events-none opacity-0 transition-transform will-change-transform">
+            <div class="bg-surface-container-lowest/90 backdrop-blur-xl border border-outline-variant/60 p-5 md:p-7 shadow-2xl space-y-4">
+              <div class="flex items-center justify-between border-b border-outline-variant/40 pb-2">
+                <span class="font-label-mono-sm text-[10px] uppercase text-rust-leather tracking-widest font-bold">
+                  SPEC 01 // TEXTURE
+                </span>
+                <span class="font-label-mono-sm text-[10px] uppercase text-outline tracking-widest">
+                  RAW FINISH
+                </span>
+              </div>
+
+              <div class="space-y-1">
+                <h3 class="font-headline-sm md:text-2xl text-pure-white uppercase font-bold tracking-wider">
+                  14.5 OZ VINTAGE SELVEDGE
+                </h3>
+                <p class="font-body-sm text-xs md:text-sm text-on-surface-variant leading-relaxed">
+                  Milled on vintage 1968 Toyoda low-tension shuttle looms in Kojima. Unsanforized, pure rope-dyed indigo warp with distinctive uneven slub yarn texture engineered for high-contrast generational fades.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 pt-2 border-t border-outline-variant/30 text-[11px] font-label-mono-sm">
+                <div>
+                  <span class="text-outline uppercase block text-[9px]">WEAVE DENSITY</span>
+                  <span class="text-on-surface font-semibold">3×1 Right-Hand Twill</span>
+                </div>
+                <div>
+                  <span class="text-outline uppercase block text-[9px]">YARN COUNT</span>
+                  <span class="text-on-surface font-semibold">6.5s Ringspun Slub</span>
+                </div>
+                <div>
+                  <span class="text-outline uppercase block text-[9px]">DYE INVOCATION</span>
+                  <span class="text-on-surface font-semibold">12 Dip Pure Indigo</span>
+                </div>
+                <div>
+                  <span class="text-outline uppercase block text-[9px]">SELVEDGE ID</span>
+                  <span class="text-on-surface font-semibold">Classic Red Ticker</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MILESTONE 3: 65% - 85% Detail Callout 2 (Right-Aligned Stitch & Fit Card) -->
+          <div id="hero-spec2" class="absolute right-4 md:right-12 lg:left-auto lg:right-24 bottom-24 md:bottom-auto md:top-1/2 md:-translate-y-1/2 max-w-sm md:max-w-md z-20 pointer-events-none opacity-0 transition-transform will-change-transform">
+            <div class="bg-surface-container-lowest/90 backdrop-blur-xl border border-outline-variant/60 p-5 md:p-7 shadow-2xl space-y-4">
+              <div class="flex items-center justify-between border-b border-outline-variant/40 pb-2">
+                <span class="font-label-mono-sm text-[10px] uppercase text-rust-leather tracking-widest font-bold">
+                  SPEC 02 // ARCHITECTURE
+                </span>
+                <span class="font-label-mono-sm text-[10px] uppercase text-outline tracking-widest">
+                  ANATOMICAL CUT
+                </span>
+              </div>
+
+              <div class="space-y-1">
+                <h3 class="font-headline-sm md:text-2xl text-pure-white uppercase font-bold tracking-wider">
+                  ARTICULATED KNEE DARTING
+                </h3>
+                <p class="font-body-sm text-xs md:text-sm text-on-surface-variant leading-relaxed">
+                  Pre-shaped 3D ergonomics prevent fabric bunching and tension points. Reinforced with heavy-gauge Japanese aramid poly-core thread, triple-needle flat-felled inseams, and custom matte gunmetal tack hardware.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 pt-2 border-t border-outline-variant/30 text-[11px] font-label-mono-sm">
+                <div>
+                  <span class="text-outline uppercase block text-[9px]">OUTSEAM</span>
+                  <span class="text-on-surface font-semibold">Continuous Clean Fold</span>
+                </div>
+                <div>
+                  <span class="text-outline uppercase block text-[9px]">HARDWARE</span>
+                  <span class="text-on-surface font-semibold">Matte Black Steel Tacks</span>
+                </div>
+                <div>
+                  <span class="text-outline uppercase block text-[9px]">INSEAM FINISH</span>
+                  <span class="text-on-surface font-semibold">Triple Chainstitch</span>
+                </div>
+                <div>
+                  <span class="text-outline uppercase block text-[9px]">POCKET LINING</span>
+                  <span class="text-on-surface font-semibold">9 oz Cotton Herringbone</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MILESTONE 4: 90% - 100% Final CTA (Centered Card) -->
+          <div id="hero-cta" class="absolute inset-x-4 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 bottom-20 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg z-20 pointer-events-none opacity-0 transition-transform will-change-transform">
+            <div class="bg-surface-container-lowest/95 backdrop-blur-2xl border border-pure-white/20 p-6 md:p-8 shadow-2xl text-center space-y-4">
+              <div class="inline-flex items-center gap-2 bg-rust-leather text-pure-white font-badge-caps text-[10px] uppercase px-2.5 py-0.5 tracking-widest font-bold">
+                BATCH 04 // LIMITED RUN
+              </div>
+
+              <div class="space-y-1">
+                <h2 class="font-display-hero-mobile md:text-4xl text-pure-white uppercase font-bold tracking-tight">
+                  VINTAGE BOOTCUT // RAW
+                </h2>
+                <p class="font-label-mono-sm text-xs text-on-surface-variant uppercase tracking-wider">
+                  14.5 OZ RAW JAPANESE SELVEDGE DENIM
+                </p>
+              </div>
+
+              <div class="flex items-center justify-center gap-3 py-1">
+                <span class="text-2xl md:text-3xl font-bold font-label-mono text-pure-white">
+                  ₹1,199
+                </span>
+                <span class="text-sm md:text-base line-through text-outline font-label-mono">
+                  ₹1,499
+                </span>
+                <span class="text-[11px] font-bold text-rust-leather bg-secondary-fixed/20 border border-rust-leather/40 px-2 py-0.5">
+                  20% OFF
+                </span>
+              </div>
+
+              <p class="text-[11px] font-label-mono-sm text-outline uppercase tracking-wider">
+                ● Only 14 pairs remaining in size 30–34
+              </p>
+
+              <div class="pt-2 flex flex-col sm:flex-row gap-2.5 pointer-events-auto">
+                <button
+                  type="button"
+                  onclick="openQuickView('denim-1')"
+                  class="flex-1 bg-primary text-pitch-black font-headline-sm text-xs md:text-sm uppercase py-3.5 px-6 font-bold tracking-wider hover:bg-pure-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all active:scale-[0.98]"
+                >
+                  SHOP NOW — QUICK VIEW
+                </button>
+                <a
+                  href="#denim-catalog"
+                  class="flex-1 border border-pure-white/40 bg-pitch-black/40 text-pure-white font-headline-sm text-xs md:text-sm uppercase py-3.5 px-4 font-bold tracking-wider text-center hover:bg-pure-white/10 transition-all active:scale-[0.98] inline-block"
+                >
+                  EXPLORE ALL FITS ↓
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Minimal HUD Angle & Frame Tracker -->
+          <div class="absolute right-4 md:right-8 top-28 md:top-32 flex flex-col items-end gap-1 pointer-events-none z-20">
+            <div class="flex items-center gap-2 font-label-mono-sm text-[10px] md:text-xs text-outline tracking-widest">
+              <span id="hero-hud-angle" class="text-on-surface font-semibold">0°</span>
+              <span class="text-outline-variant">|</span>
+              <span>FRAME</span>
+              <span id="hero-hud-frame" class="text-pure-white font-mono">001</span>
+              <span class="text-outline-variant">/ 300</span>
+            </div>
+            <div class="w-24 md:w-32 h-[2px] bg-outline-variant/30 overflow-hidden relative">
+              <div id="hero-hud-progress" class="h-full bg-primary transition-all duration-75" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Preloader Screen (0% – 100%) -->
+          <div id="hero-preloader" class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-surface-dark transition-opacity duration-500 ease-out">
+            <div class="w-full max-w-xs px-6 flex flex-col items-center text-center space-y-4">
+              <div class="flex items-center gap-2 text-outline">
+                <span class="w-2 h-2 rounded-full bg-rust-leather animate-ping"></span>
+                <span class="font-label-mono-sm text-[10px] uppercase tracking-[0.25em]">
+                  INITIALIZING 3D ENGINE
+                </span>
+              </div>
+
+              <div id="hero-loader-percent" class="font-mono text-5xl md:text-6xl font-light text-pure-white tracking-tighter leading-none">
+                000%
+              </div>
+
+              <div class="w-full h-[2px] bg-outline-variant/30 overflow-hidden relative">
+                <div id="hero-loader-bar" class="h-full bg-primary transition-all duration-100 ease-out" style="width: 0%;"></div>
+              </div>
+
+              <div class="flex items-center justify-between w-full font-label-mono-sm text-[10px] text-outline uppercase tracking-widest pt-1">
+                <span>DENIM ARCHIVE</span>
+                <span id="hero-loader-count">0 / 300 FRAMES</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -1721,6 +1925,289 @@
     function openPromoInfo() {
       showToast('✓ Use code HIVE10 at checkout for 10% off');
     }
+
+    /* =========================================================================
+       3D SCROLL-DRIVEN HERO ENGINE (APPLE-STYLE CANVAS SCRUBBER)
+    ========================================================================= */
+    (function init3DHeroEngine() {
+      const TOTAL_FRAMES = 300;
+      const LERP_FACTOR = 0.1;
+      const TILT_LERP = 0.08;
+      const MAX_TILT = 3;
+
+      const track = document.getElementById('hero-3d-track');
+      const viewport = document.getElementById('hero-viewport');
+      const canvasContainer = document.getElementById('hero-canvas-container');
+      const canvas = document.getElementById('hero-canvas');
+      if (!canvas || !track) return;
+
+      const introEl = document.getElementById('hero-intro');
+      const scrollIndicatorEl = document.getElementById('hero-scroll-indicator');
+      const spec1El = document.getElementById('hero-spec1');
+      const spec2El = document.getElementById('hero-spec2');
+      const ctaEl = document.getElementById('hero-cta');
+      const hudAngle = document.getElementById('hero-hud-angle');
+      const hudFrame = document.getElementById('hero-hud-frame');
+      const hudProgress = document.getElementById('hero-hud-progress');
+      const preloader = document.getElementById('hero-preloader');
+      const loaderPercent = document.getElementById('hero-loader-percent');
+      const loaderBar = document.getElementById('hero-loader-bar');
+      const loaderCount = document.getElementById('hero-loader-count');
+
+      const images = [];
+      let loaded = 0;
+      let isLoaded = false;
+      let currentFrame = 0;
+      let targetProgress = 0;
+      let lastRenderedFrame = -1;
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      const mouse = {
+        targetTiltX: 0,
+        targetTiltY: 0,
+        currentTiltX: 0,
+        currentTiltY: 0
+      };
+
+      function resizeCanvas() {
+        if (!canvas || !viewport) return;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = viewport.clientWidth;
+        const h = viewport.clientHeight;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        if (isLoaded) {
+          drawCanvas(Math.round(currentFrame));
+        }
+      }
+
+      function drawCanvas(frameIdx) {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        const img = images[frameIdx] || images[0];
+        if (!img || !img.complete || img.naturalWidth === 0) return;
+
+        const w = canvas.width / dpr;
+        const h = canvas.height / dpr;
+
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.fillStyle = '#0e0e0e';
+        ctx.fillRect(0, 0, w, h);
+
+        const imgW = img.naturalWidth;
+        const imgH = img.naturalHeight;
+        const imgAspect = imgW / imgH;
+
+        const isMobile = w < 768;
+        const targetH = isMobile ? h * 0.82 : h * 0.86;
+        const targetW = targetH * imgAspect;
+        const drawX = (w - targetW) / 2;
+        const drawY = (h - targetH) / 2;
+
+        ctx.drawImage(img, drawX, drawY, targetW, targetH);
+
+        const hFade = Math.min(140, targetW * 0.16);
+        const vFade = Math.min(100, targetH * 0.14);
+
+        const leftGrad = ctx.createLinearGradient(drawX, 0, drawX + hFade, 0);
+        leftGrad.addColorStop(0, '#0e0e0e');
+        leftGrad.addColorStop(1, 'rgba(14, 14, 14, 0)');
+        ctx.fillStyle = leftGrad;
+        ctx.fillRect(drawX - 2, drawY - 2, hFade + 2, targetH + 4);
+
+        const rightGrad = ctx.createLinearGradient(drawX + targetW, 0, drawX + targetW - hFade, 0);
+        rightGrad.addColorStop(0, '#0e0e0e');
+        rightGrad.addColorStop(1, 'rgba(14, 14, 14, 0)');
+        ctx.fillStyle = rightGrad;
+        ctx.fillRect(drawX + targetW - hFade, drawY - 2, hFade + 2, targetH + 4);
+
+        const topGrad = ctx.createLinearGradient(0, drawY, 0, drawY + vFade);
+        topGrad.addColorStop(0, '#0e0e0e');
+        topGrad.addColorStop(1, 'rgba(14, 14, 14, 0)');
+        ctx.fillStyle = topGrad;
+        ctx.fillRect(drawX - 2, drawY - 2, targetW + 4, vFade + 2);
+
+        const bottomGrad = ctx.createLinearGradient(0, drawY + targetH, 0, drawY + targetH - vFade);
+        bottomGrad.addColorStop(0, '#0e0e0e');
+        bottomGrad.addColorStop(1, 'rgba(14, 14, 14, 0)');
+        ctx.fillStyle = bottomGrad;
+        ctx.fillRect(drawX - 2, drawY + targetH - vFade, targetW + 4, vFade + 2);
+
+        const maxDim = Math.max(w, h);
+        const minDim = Math.min(w, h);
+        const vignette = ctx.createRadialGradient(
+          w / 2, h / 2, minDim * 0.35,
+          w / 2, h / 2, maxDim * 0.72
+        );
+        vignette.addColorStop(0, 'rgba(14, 14, 14, 0)');
+        vignette.addColorStop(0.65, 'rgba(14, 14, 14, 0.22)');
+        vignette.addColorStop(0.88, 'rgba(14, 14, 14, 0.75)');
+        vignette.addColorStop(1, 'rgba(14, 14, 14, 0.98)');
+        ctx.fillStyle = vignette;
+        ctx.fillRect(0, 0, w, h);
+
+        lastRenderedFrame = frameIdx;
+      }
+
+      function updateOverlays(p) {
+        if (introEl) {
+          let op = 0, ty = -20;
+          if (p <= 0.12) { op = 1; ty = 0; }
+          else if (p < 0.20) { const t = (p - 0.12) / 0.08; op = 1 - t; ty = -24 * t; }
+          introEl.style.opacity = op.toFixed(3);
+          introEl.style.transform = 'translate3d(0, ' + ty.toFixed(1) + 'px, 0)';
+          introEl.style.pointerEvents = op > 0.05 ? 'auto' : 'none';
+        }
+
+        if (scrollIndicatorEl) {
+          let op = 0;
+          if (p <= 0.01) { op = 1; }
+          else if (p < 0.05) { op = 1 - (p - 0.01) / 0.04; }
+          scrollIndicatorEl.style.opacity = op.toFixed(3);
+          scrollIndicatorEl.style.pointerEvents = op > 0.05 ? 'auto' : 'none';
+        }
+
+        if (spec1El) {
+          let op = 0, ty = 20;
+          if (p >= 0.28 && p < 0.35) { const t = (p - 0.28) / 0.07; op = t; ty = 24 * (1 - t); }
+          else if (p >= 0.35 && p <= 0.48) { op = 1; ty = 0; }
+          else if (p > 0.48 && p <= 0.56) { const t = (p - 0.48) / 0.08; op = 1 - t; ty = -24 * t; }
+          spec1El.style.opacity = op.toFixed(3);
+          spec1El.style.transform = 'translate3d(0, ' + ty.toFixed(1) + 'px, 0)';
+          spec1El.style.pointerEvents = op > 0.05 ? 'auto' : 'none';
+        }
+
+        if (spec2El) {
+          let op = 0, ty = 20;
+          if (p >= 0.60 && p < 0.67) { const t = (p - 0.60) / 0.07; op = t; ty = 24 * (1 - t); }
+          else if (p >= 0.67 && p <= 0.79) { op = 1; ty = 0; }
+          else if (p > 0.79 && p <= 0.87) { const t = (p - 0.79) / 0.08; op = 1 - t; ty = -24 * t; }
+          spec2El.style.opacity = op.toFixed(3);
+          spec2El.style.transform = 'translate3d(0, ' + ty.toFixed(1) + 'px, 0)';
+          spec2El.style.pointerEvents = op > 0.05 ? 'auto' : 'none';
+        }
+
+        if (ctaEl) {
+          let op = 0, ty = 25;
+          if (p >= 0.88 && p < 0.94) { const t = (p - 0.88) / 0.06; op = t; ty = 24 * (1 - t); }
+          else if (p >= 0.94) { op = 1; ty = 0; }
+          ctaEl.style.opacity = op.toFixed(3);
+          ctaEl.style.transform = 'translate3d(0, ' + ty.toFixed(1) + 'px, 0)';
+          ctaEl.style.pointerEvents = op > 0.05 ? 'auto' : 'none';
+        }
+
+        if (hudAngle) hudAngle.textContent = Math.round(p * 360) + '°';
+        if (hudFrame) {
+          const f = Math.min(Math.round(currentFrame) + 1, TOTAL_FRAMES);
+          hudFrame.textContent = String(f).padStart(3, '0');
+        }
+        if (hudProgress) hudProgress.style.width = Math.round(p * 100) + '%';
+      }
+
+      function calcProgress() {
+        if (!track) return 0;
+        const rect = track.getBoundingClientRect();
+        const total = track.offsetHeight - window.innerHeight;
+        if (total <= 0) return 0;
+        const cur = -rect.top;
+        return Math.max(0, Math.min(1, cur / total));
+      }
+
+      function onScroll() {
+        targetProgress = calcProgress();
+      }
+
+      function onMouseMove(e) {
+        const halfW = window.innerWidth / 2;
+        const halfH = window.innerHeight / 2;
+        const normX = (e.clientX - halfW) / halfW;
+        const normY = (e.clientY - halfH) / halfH;
+        mouse.targetTiltY = Math.max(-MAX_TILT, Math.min(MAX_TILT, normX * MAX_TILT));
+        mouse.targetTiltX = Math.max(-MAX_TILT, Math.min(MAX_TILT, -normY * MAX_TILT));
+      }
+
+      function onMouseLeave() {
+        mouse.targetTiltX = 0;
+        mouse.targetTiltY = 0;
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', resizeCanvas);
+      window.addEventListener('mousemove', onMouseMove, { passive: true });
+      window.addEventListener('mouseleave', onMouseLeave);
+
+      function loop() {
+        const targetFrame = targetProgress * (TOTAL_FRAMES - 1);
+        currentFrame += (targetFrame - currentFrame) * LERP_FACTOR;
+        const rounded = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(currentFrame)));
+
+        if (rounded !== lastRenderedFrame && isLoaded) {
+          drawCanvas(rounded);
+        }
+
+        mouse.currentTiltX += (mouse.targetTiltX - mouse.currentTiltX) * TILT_LERP;
+        mouse.currentTiltY += (mouse.targetTiltY - mouse.currentTiltY) * TILT_LERP;
+
+        const scale = 1.0 + (targetProgress * 0.08);
+        if (canvasContainer) {
+          canvasContainer.style.transform = 'perspective(1000px) scale(' + scale.toFixed(4) + ') rotateX(' + mouse.currentTiltX.toFixed(2) + 'deg) rotateY(' + mouse.currentTiltY.toFixed(2) + 'deg)';
+        }
+
+        updateOverlays(targetProgress);
+        requestAnimationFrame(loop);
+      }
+
+      function onFrameLoaded() {
+        loaded++;
+        const pct = Math.floor((loaded / TOTAL_FRAMES) * 100);
+        if (loaderPercent) loaderPercent.textContent = String(pct).padStart(3, '0') + '%';
+        if (loaderBar) loaderBar.style.width = pct + '%';
+        if (loaderCount) loaderCount.textContent = loaded + ' / ' + TOTAL_FRAMES + ' FRAMES';
+
+        if (loaded >= TOTAL_FRAMES) {
+          isLoaded = true;
+          resizeCanvas();
+          drawCanvas(0);
+          if (preloader) {
+            preloader.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(function() { preloader.remove(); }, 600);
+          }
+        }
+      }
+
+      // Preload images
+      for (let i = 1; i <= TOTAL_FRAMES; i++) {
+        const pad = String(i).padStart(3, '0');
+        const img = new Image();
+        img.src = 'public/frames/ezgif-frame-' + pad + '.jpg';
+        img.onload = onFrameLoaded;
+        img.onerror = function() {
+          img.src = '/frames/ezgif-frame-' + pad + '.jpg';
+          img.onload = onFrameLoaded;
+          img.onerror = onFrameLoaded;
+        };
+        images.push(img);
+      }
+
+      // Safety timeout
+      setTimeout(function() {
+        if (!isLoaded) {
+          isLoaded = true;
+          resizeCanvas();
+          drawCanvas(0);
+          if (preloader) {
+            preloader.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(function() { preloader.remove(); }, 600);
+          }
+        }
+      }, 4500);
+
+      resizeCanvas();
+      onScroll();
+      requestAnimationFrame(loop);
+    })();
   </script>
 </body>
 </html>
